@@ -1,0 +1,84 @@
+div#coffee-table
+{   
+    margin: 1% 2% 0 2%;
+    padding: 5px;
+}
+
+#col_name
+{
+    min-width: 175px;
+}
+
+#coffee-table td
+{
+    vertical-align: middle;
+    max-height: min-content;
+    max-width: min-content;
+    padding: 2px;
+}
+
+#coffee-table tr:hover
+{
+    background-color: lightskyblue;
+}
+
+.header-title
+{
+    display: inline-flex;
+    height: auto;
+    max-width: fit-content;
+}
+
+#header-img
+{
+    display: contents;
+    height: auto;
+    width: 150px;
+    margin: auto;
+}
+
+#header-img svg
+{
+    object-fit: scale-down;
+    max-height: 100%;
+}
+
+#header-title-text
+{
+    margin: auto 0;
+    margin-left: 20px;
+}
+
+#header-filter
+{
+    display: block;
+    justify-content: space-around;
+    align-items: center;
+    min-width: fit-content;
+}
+
+#filter-title
+{
+    top: 0;
+}
+
+header
+{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    width: auto;
+    padding: 20px;
+    height: 5%;
+    max-height: 150px;
+    background-color: lightgray;
+}
+
+form input[type=submit]
+{
+    border-radius: 3px;
+    border: 2px lightgray;
+    background-color: lightskyblue;
+    font-weight: 500;
+    padding: 5px 10px;
+}

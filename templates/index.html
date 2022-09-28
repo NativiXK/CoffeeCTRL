@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %} Coffee {% endblock %}
+
+{% block header %}
+<header>
+    <div class="header-title">
+        <div id="header-img">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 30 30" enable-background="new 0 0 30 30">
+                <g>
+                  <g>
+                    <path fill="#020400" fill-rule="evenodd" d="M29,27H1c-0.552,0-1,0.447-1,1c0,0.553,0.448,1,1,1h9    c0,0.553,0.448,1,1,1h8c0.553,0,1-0.447,1-1h9c0.553,0,1-0.447,1-1C30,27.447,29.553,27,29,27z M11.153,25h7.695    c1.359-0.682,2.567-1.713,3.545-3H26c2.209,0,4-1.791,4-4s-1.791-4-4-4c-0.35,0-0.684,0.06-1.007,0.144    C24.994,14.069,25,13.997,25,13.923C25,13.413,24.656,13,24.23,13H5.769C5.344,13,5,13.413,5,13.923    C5,18.914,7.54,23.191,11.153,25z M24.776,16.429C25.115,16.164,25.537,16,26,16c1.104,0,2,0.896,2,2s-0.896,2-2,2h-2.379    C24.156,18.908,24.55,17.706,24.776,16.429z M23,15c0,4.418-3.582,8-8,8c-4.419,0-8-3.582-8-8H23z M20,8    c0,0.725-0.357,0.862-0.587,1.486c-0.057,0.103-0.089,0.215-0.097,0.339C19.281,10.416,19.533,11,20.4,11    c0.441,0,0.625-0.453,0.8-0.75C21.535,9.719,22,8.917,22,8c0-1.265-0.418-1.838-0.832-2.562C20.69,4.601,20,4.371,20,3    c0-0.73,0.435-0.96,0.662-1.6c0.055-0.102,0.082-0.211,0.092-0.332C20.789,0.654,20.432,0,19.6,0c-0.441,0-0.6,0.383-0.8,0.75    C18.486,1.349,18,2.072,18,3c0,1.478,0.44,1.749,0.852,2.438C19.268,6.131,20,6.735,20,8z M15,8c0,0.725-0.357,0.862-0.587,1.486    c-0.057,0.103-0.089,0.215-0.096,0.339C14.281,10.416,14.533,11,15.4,11c0.441,0,0.625-0.453,0.8-0.75C16.535,9.719,17,8.917,17,8    c0-1.265-0.418-1.838-0.832-2.562C15.69,4.601,15,4.371,15,3c0-0.73,0.435-0.96,0.662-1.6c0.055-0.102,0.082-0.211,0.092-0.332    C15.789,0.654,15.432,0,14.6,0c-0.441,0-0.6,0.383-0.8,0.75C13.486,1.349,13,2.072,13,3c0,1.478,0.44,1.749,0.852,2.438    C14.267,6.131,15,6.735,15,8z M10,8c0,0.725-0.358,0.862-0.587,1.486C9.356,9.59,9.324,9.701,9.317,9.825    C9.281,10.416,9.533,11,10.4,11c0.442,0,0.625-0.453,0.8-0.75C11.535,9.719,12,8.917,12,8c0-1.265-0.419-1.838-0.833-2.562    C10.69,4.601,10,4.371,10,3c0-0.73,0.435-0.96,0.663-1.6c0.054-0.102,0.081-0.211,0.091-0.332C10.79,0.654,10.431,0,9.6,0    C9.158,0,9,0.383,8.8,0.75C8.486,1.349,8,2.072,8,3c0,1.478,0.44,1.749,0.852,2.438C9.267,6.131,10,6.735,10,8z"/>
+                  </g>
+                </g>
+              </svg>
+        </div>
+        <h2 id="header-title-text">Coffee manager</h2>
+    </div>
+
+    <div id="header-filter">
+        <h3 id="filter-title">Filtro</h3>
+        <form action="/" method="post">
+            <input type="text" name="name" placeholder="Nome">
+            <input type="submit" title="Filtrar" value="Filtrar">
+        </form>
+    </div>
+</header>
+{% endblock %}
+
+{% block body %}
+<div id="coffee-table" class="card">
+    <table class="table table-striped table-hover text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col" id="col_name">Nome</th>
+                <th scope="col">Janeiro</th>
+                <th scope="col">Fevereiro</th>
+                <th scope="col">Março</th>
+                <th scope="col">Abril</th>
+                <th scope="col">Maio</th>
+                <th scope="col">Junho</th>
+                <th scope="col">Julho</th>
+                <th scope="col">Agosto</th>
+                <th scope="col">Setembro</th>
+                <th scope="col">Outubro</th>
+                <th scope="col">Novembro</th>
+                <th scope="col">Dezembro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr scope="row">
+                <td>{{ user.id }}</td>
+                <td id="col_name">{{ user.name }}</td>
+                {% for month in user.months %}
+                    {% if month.value == '-' %}
+                        <td style="background-color: lightgrey;">-</td>
+                    {% elif month.value %}
+                        <td style="background-color: lightgreen;">R${{ month.value }}</td>    
+                    {% else %}
+                        <td style="background-color: lightcoral;">R${{ month.value }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
