@@ -67,7 +67,7 @@ header
     display: flex;
     align-content: center;
     justify-content: space-between;
-    width: auto;
+    width: 100%;
     padding: 20px;
     height: 5%;
     max-height: 150px;
