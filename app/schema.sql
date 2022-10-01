@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS purchase;
+DROP TABLE IF EXISTS person;
+
+
 CREATE TABLE IF NOT EXISTS user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
@@ -44,6 +51,9 @@ CREATE TABLE IF NOT EXISTS purchase (
     FOREIGN KEY (items_id) REFERENCES items (id),
     FOREIGN KEY (person_id) REFERENCES person (id)
 );
+
+INSERT INTO user (username, password) VALUES
+    ("admin", "pbkdf2:sha256:260000$hF5MCPGWuihDgxJV$ec34b1b2f7b18bd07838c9c115b1fd936da8574f00fff4467b64635973c299b9");
 
 INSERT INTO person (name, email) VALUES
     ("Alan Vitor Gomes", "alanvg@weg.net"),

@@ -17,4 +17,4 @@ def index():
 @bp.route("/edit")
 @login_required
 def edit_payments():
-    return render_template("manager/index.html")
+    return render_template("manager/edit.html", users=db.get_user_payments())

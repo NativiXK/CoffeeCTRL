@@ -1,5 +1,10 @@
 {% extends 'layout.html' %}
 
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='auth/style.css') }}">
+{% endblock %}
+
+
 {% block header %}
   <h1>{% block title %}Log In{% endblock %}</h1>
 {% endblock %}
@@ -11,5 +16,7 @@
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
     <input type="submit" value="Log In">
+    <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"
+/>
   </form>
 {% endblock %}

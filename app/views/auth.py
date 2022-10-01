@@ -1,4 +1,5 @@
-import functools
+import functools, click
+from operator import ne
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -13,7 +14,7 @@ def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login', next=request.url))
 
         return view(**kwargs)
 
@@ -54,6 +55,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        next_url = request.form["next"]
+
         db = get_db()
         error = None
         user = db.execute(
@@ -68,6 +71,10 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
+            
+            if next_url:
+                return redirect(next_url)
+
             return redirect(url_for('index'))
 
         flash(error)

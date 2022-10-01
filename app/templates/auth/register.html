@@ -1,5 +1,9 @@
 {% extends 'layout.html' %}
 
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='auth/style.css') }}">
+{% endblock %}
+
 {% block header %}
   <h1>{% block title %}Register{% endblock %}</h1>
 {% endblock %}
