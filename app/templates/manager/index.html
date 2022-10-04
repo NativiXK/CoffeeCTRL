@@ -20,6 +20,10 @@
         <h2 id="header-title-text">Coffee manager</h2>
     </div>
 
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal">Login</button>
+    </div>
+    
     <div id="header-filter">
         <h3 id="filter-title">Filtro</h3>
         <form action="/" method="post">
@@ -36,24 +40,24 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col" id="col_name">Nome</th>
-                <th scope="col">Janeiro</th>
-                <th scope="col">Fevereiro</th>
-                <th scope="col">Março</th>
-                <th scope="col">Abril</th>
-                <th scope="col">Maio</th>
-                <th scope="col">Junho</th>
-                <th scope="col">Julho</th>
-                <th scope="col">Agosto</th>
-                <th scope="col">Setembro</th>
-                <th scope="col">Outubro</th>
-                <th scope="col">Novembro</th>
-                <th scope="col">Dezembro</th>
+                <th scope="col">Jan</th>
+                <th scope="col">Fev</th>
+                <th scope="col">Mar</th>
+                <th scope="col">Abr</th>
+                <th scope="col">Mai</th>
+                <th scope="col">Jun</th>
+                <th scope="col">Jul</th>
+                <th scope="col">Ago</th>
+                <th scope="col">Set</th>
+                <th scope="col">Out</th>
+                <th scope="col">Nov</th>
+                <th scope="col">Dez</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
-            <tr scope="row">
-                <td>{{ user.id }}</td>
+            <tr>
+                <th scope="row">{{ user.id }}</td>
                 <td id="col_name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if month.value == '-' %}
@@ -64,10 +68,45 @@
                         <td style="background-color: lightcoral;">R${{ month.value }}</td>
                     {% endif %}
                 {% endfor %}
+                <td hidden="hidden">
+                    <a class="btn btn-link w-100 h-auto" role="button" data-toggle="collapse" data-target="#collapse{{user.id}}" aria-expanded="false" aria-controls="collapse{{user.id}}"></a>
+                    <div class="collapse" id="collapse{{user.id}}">
+                        <div class="card card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="LoginModal">LOGIN</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/auth/login" method="post">
+                <div class="form-login">
+                    <label for="username">Username</label>
+                    <input name="username" id="username" required>
+                </div>
+                <div class="form-login"></div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div class="form-login"></div>
+                    <input class="btn btn-primary" type="submit" value="Log In">
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

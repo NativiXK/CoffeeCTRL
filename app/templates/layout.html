@@ -12,6 +12,18 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body class="user-select-none">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div id="overlay" class="alert alert-danger" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <header>
         {% block header %} {% endblock %}
     </header>

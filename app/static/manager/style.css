@@ -1,3 +1,14 @@
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    max-height: max-content;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
 div#coffee-table
 {   
     margin: 1% 2% 0 2%;
@@ -9,12 +20,12 @@ div#coffee-table
     min-width: 175px;
 }
 
-#coffee-table td
+#coffee-table td, #coffee-table th
 {
     vertical-align: middle;
     max-height: min-content;
     max-width: min-content;
-    padding: 2px;
+    padding: 5px;
 }
 
 #coffee-table tr:hover
