@@ -63,20 +63,19 @@ div#coffee-table
 .header-tools
 {
     width: 50%;
-    margin: auto;
+    margin: auto 10px;
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #header-filter
 {
-    display: block;
+    display: flex;
     justify-content: space-around;
-    align-items: center;
     min-width: fit-content;
-}
-
-#filter-title
-{
-    top: 0;
+    align-items: center;
 }
 
 header
@@ -89,13 +88,4 @@ header
     height: 5%;
     max-height: 150px;
     background-color: lightgray;
-}
-
-form input[type=submit]
-{
-    border-radius: 3px;
-    border: 2px lightgray;
-    background-color: lightskyblue;
-    font-weight: 500;
-    padding: 5px 10px;
 }

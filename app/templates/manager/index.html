@@ -20,15 +20,16 @@
         <h2 id="header-title-text">Coffee manager</h2>
     </div>
 
-    <div>
+    <div class="header-tools">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal">Login</button>
     </div>
     
     <div id="header-filter">
-        <h3 id="filter-title">Filtro</h3>
-        <form action="/" method="post">
-            <input type="text" name="name" placeholder="Nome">
-            <input type="submit" title="Filtrar" value="Filtrar">
+        <form class="input-group" action="/" method="post">
+            <input autofocus class="form-control w-75" type="text" name="name" placeholder="Nome" aria-label="name" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <input class="btn btn-primary" id="button-addon2" type="submit" title="Filtrar" value="Filtrar">
+            </div>
         </form>
     </div>
 {% endblock %}
@@ -56,8 +57,8 @@
         </thead>
         <tbody>
             {% for user in users %}
-            <tr>
-                <th scope="row">{{ user.id }}</td>
+            <tr scope="row">
+                <td>{{ user.id }}</td>
                 <td id="col_name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if month.value == '-' %}
@@ -68,14 +69,6 @@
                         <td style="background-color: lightcoral;">R${{ month.value }}</td>
                     {% endif %}
                 {% endfor %}
-                <td hidden="hidden">
-                    <a class="btn btn-link w-100 h-auto" role="button" data-toggle="collapse" data-target="#collapse{{user.id}}" aria-expanded="false" aria-controls="collapse{{user.id}}"></a>
-                    <div class="collapse" id="collapse{{user.id}}">
-                        <div class="card card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                        </div>
-                    </div>
-                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -92,18 +85,20 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/auth/login" method="post">
-                <div class="form-login">
-                    <label for="username">Username</label>
-                    <input name="username" id="username" required>
+            <form class="input-group" action="/auth/login" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                      </div>
+                    <input class="form-control" name="username" id="username" required>
                 </div>
-                <div class="form-login"></div>
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required>
+                <div class="input-group mb-3"></div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                    </div>
+                    <input class="form-control" type="password" name="password" id="password" required>
                 </div>
-                <div class="form-login"></div>
-                    <input class="btn btn-primary" type="submit" value="Log In">
-                </div>
+                    <input class="btn btn-primary m-2 mb-2" type="submit" value="Log In">  
             </form>
         </div>
       </div>

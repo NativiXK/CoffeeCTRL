@@ -21,16 +21,15 @@
     </div>
 
     <div class="header-tools">
-        <button type="button" class="btn btn-success">Pagamento</button>
-        <button type="button" class="btn btn-warning">Compra</button>
         <button type="submit" class="btn btn-secondary" onclick="window.location.href='auth/logout';">Logout</button>
     </div>
 
     <div id="header-filter">
-        <h3 id="filter-title">Filtro</h3>
-        <form action="/" method="post">
-            <input type="text" name="name" placeholder="Nome">
-            <input type="submit" title="Filtrar" value="Filtrar">
+        <form class="input-group" action="/edit" method="post">
+            <input autofocus class="form-control w-75" type="text" name="name" placeholder="Nome" aria-label="name" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <input class="btn btn-primary" id="button-addon2" type="submit" title="Filtrar" value="Filtrar">
+            </div>
         </form>
     </div>
 {% endblock %}
@@ -58,8 +57,8 @@
         </thead>
         <tbody>
             {% for user in users %}
-            <tr scope="row">
-                <td>{{ user.id }}</td>
+            <tr scope="row" onclick="toggle_collapse('collapse{{user.id}}')">
+                <th > {{ user.id }} </td>
                 <td id="col_name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if month.value == '-' %}
@@ -70,6 +69,13 @@
                         <td style="background-color: lightcoral;">R${{ month.value }}</td>
                     {% endif %}
                 {% endfor %}
+            </tr>
+            <tr scope="row" style="max-height: min-content;" class="collapse" id="collapse{{user.id}}">
+                <td colspan="100%" >
+                    <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

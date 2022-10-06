@@ -6,7 +6,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.db import get_db
+from app.db import get_db, get_user_payments
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -72,7 +72,7 @@ def login():
             session.clear()
             session['user_id'] = user['id']
 
-            return redirect(url_for('index'))
+            return render_template("manager/edit.html", users = get_user_payments())
 
         flash(error)
 

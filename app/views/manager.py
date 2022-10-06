@@ -14,7 +14,13 @@ def index():
      
     return render_template("manager/index.html", users = db.get_user_payments())
 
-@bp.route("/edit")
+@bp.route("/edit", methods=["GET", "POST"])
 @login_required
 def edit_payments():
-    return render_template("manager/edit.html", users=db.get_user_payments())
+    if request.method == "POST":
+        name = request.form.get("name").strip()
+
+        if name:
+            return render_template("manager/edit.html", users = db.get_user_payments(name))
+     
+    return render_template("manager/edit.html", users = db.get_user_payments())
