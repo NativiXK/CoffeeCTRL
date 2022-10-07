@@ -40,7 +40,7 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col" id="col_name">Nome</th>
+                <th scope="col" class="col-name">Nome</th>
                 <th scope="col">Jan</th>
                 <th scope="col">Fev</th>
                 <th scope="col">Mar</th>
@@ -58,8 +58,8 @@
         <tbody>
             {% for user in users %}
             <tr scope="row">
-                <td>{{ user.id }}</td>
-                <td id="col_name">{{ user.name }}</td>
+                <td class="col-id">{{ user.id }}</td>
+                <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if month.value == '-' %}
                         <td style="background-color: lightgrey;">-</td>

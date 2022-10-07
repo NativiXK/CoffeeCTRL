@@ -34,5 +34,6 @@ def create_app(test_config=None):
     app.register_blueprint(api.bp)
     app.register_blueprint(manager.bp)
     app.add_url_rule('/', endpoint='index')
+    app.add_url_rule('/edit', endpoint='edit')
 
     return app

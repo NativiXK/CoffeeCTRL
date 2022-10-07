@@ -21,7 +21,7 @@
     </div>
 
     <div class="header-tools">
-        <button type="submit" class="btn btn-secondary" onclick="window.location.href='logout';">Logout</button>
+        <button type="submit" class="btn btn-secondary" onclick="window.location.href='auth/logout';">Logout</button>
     </div>
 
     <div id="header-filter">
@@ -40,41 +40,42 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col" id="col_name">Nome</th>
-                <th scope="col">Janeiro</th>
-                <th scope="col">Fevereiro</th>
-                <th scope="col">Março</th>
-                <th scope="col">Abril</th>
-                <th scope="col">Maio</th>
-                <th scope="col">Junho</th>
-                <th scope="col">Julho</th>
-                <th scope="col">Agosto</th>
-                <th scope="col">Setembro</th>
-                <th scope="col">Outubro</th>
-                <th scope="col">Novembro</th>
-                <th scope="col">Dezembro</th>
+                <th scope="col" class="col-name">Nome</th>
+                <th scope="col">Jan</th>
+                <th scope="col">Fev</th>
+                <th scope="col">Mar</th>
+                <th scope="col">Abr</th>
+                <th scope="col">Mai</th>
+                <th scope="col">Jun</th>
+                <th scope="col">Jul</th>
+                <th scope="col">Ago</th>
+                <th scope="col">Set</th>
+                <th scope="col">Out</th>
+                <th scope="col">Nov</th>
+                <th scope="col">Dez</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
-            <tr scope="row" onclick="toggle_collapse('collapse{{user.id}}')">
-                <th > {{ user.id }} </td>
-                <td id="col_name">{{ user.name }}</td>
+            <!-- onclick="toggle_collapse('collapse{{user.id}}')" -->
+            <tr scope="row" id="row-{{user.id}}" onclick="toggle_collapse('collapse{{user.id}}')">
+                <th class="col-id"> {{ user.id }} </td>
+                <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if month.value == '-' %}
-                        <td style="background-color: lightgrey;">-</td>
+                        <td id="month-{{month}}" style="background-color: lightgrey;">-</td>
                     {% elif month.value %}
-                        <td style="background-color: lightgreen;">R${{ month.value }}</td>    
+                        <td id="month-{{month}}" style="background-color: lightgreen;">R${{ month.value }}</td>    
                     {% else %}
-                        <td style="background-color: lightcoral;">R${{ month.value }}</td>
+                        <td id="month-{{month}}" style="background-color: lightcoral;">R${{ month.value }}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
             <tr scope="row" style="max-height: min-content;" class="collapse" id="collapse{{user.id}}">
                 <td colspan="100%" >
                     <div class="card card-body p-1 d-flex flex-row justify-content-around">
-                        <button class="btn btn-primary">Pagamento</button>
-                        <button class="btn btn-secondary">Editar</button>
+                        <button class="btn btn-primary" id="pay-{{ user.id }}">Pagamento</button>
+                        <button class="btn btn-secondary" id="edit-{{ user.id }}">Editar</button>
                     </div>
                 </td>
             </tr>

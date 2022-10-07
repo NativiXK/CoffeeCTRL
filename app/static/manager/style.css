@@ -15,7 +15,7 @@ div#coffee-table
     padding: 5px;
 }
 
-#col_name
+#col-name
 {
     min-width: 175px;
 }
@@ -25,7 +25,7 @@ div#coffee-table
     vertical-align: middle;
     max-height: min-content;
     max-width: min-content;
-    padding: 5px;
+    padding: 2px;
 }
 
 #coffee-table tr:hover
@@ -88,4 +88,10 @@ header
     height: 5%;
     max-height: 150px;
     background-color: lightgray;
+}
+
+element {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
 }
