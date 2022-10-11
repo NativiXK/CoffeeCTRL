@@ -1,6 +1,9 @@
 let last_collapse = 0;
 
 $('.collapse').collapse();
+$(".date").datepicker({
+    format: "dd-mm-yyyy",
+  });
 
 // Toggle collapsable element by its id
 function toggle_collapse(id)
@@ -68,4 +71,5 @@ function row_buttons_events()
 document.addEventListener('DOMContentLoaded', (event) => {
     // Add event listeners
     row_buttons_events();
+
   });
