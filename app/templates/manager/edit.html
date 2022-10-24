@@ -100,14 +100,14 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     </div>
                     <input type="number" id="pay-userid" hidden>
-                    <input class="form-control" name="name" id="name" readonly>
+                    <input class="form-control" name="pay-name" id="pay-name" readonly>
                 </div>
                 <!-- Payment date -->
                 <div class="input-group date mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
                     </div>
-                    <input class="date form-control" type="date" name="pay-date" id="pay-date" placeholder="dd-mm-yyyy" value="" min="2020-02-20" max="2032-02-20" required>
+                    <input class="date form-control" type="date" name="pay-date" id="pay-date" placeholder="dd-mm-yyyy" value="" min="2020-02-20" required>
 
                 </div>
                 <!-- Payment value -->
@@ -127,6 +127,37 @@
                 <!-- Payment confirmation or closure -->
                 <div class="input-group mb-3 d-flex justify-content-around">
                     <input class="btn btn-success m-2 mb-2" id="pay-confirm" type="button" value="Confirm">
+                    <input class="btn btn-danger m-2 mb-2" type="button" value="Cancel" data-dismiss="modal" aria-label="Close">
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModal">EDIT</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" id="edit-form">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    </div>
+                    <input type="number" id="edit-userid" hidden>
+                    <input class="form-control" name="edit-name" id="edit-name" readonly>
+                </div>
+
+
+                <!-- Payment confirmation or closure -->
+                <div class="input-group mb-3 d-flex justify-content-around">
+                    <input class="btn btn-success m-2 mb-2" id="edit-confirm" type="button" value="Confirm">
                     <input class="btn btn-danger m-2 mb-2" type="button" value="Cancel" data-dismiss="modal" aria-label="Close">
                 </div>
             </form>

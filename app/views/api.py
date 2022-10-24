@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from flask import jsonify, request, Blueprint
 from app import db
 
@@ -9,6 +8,13 @@ bp = Blueprint('API', __name__, url_prefix='/API')
 @bp.route("/get_user_payments/", methods=["GET"])
 def API_get_user_payments(name : str = ""):
     return db.get_user_payments(name)
+
+@bp.route("/get_user_by_id", methods=["POST"])
+def API_get_user_by_id():
+    id = int(request.get_json()["id"])
+    user = db.get_db().execute(f"SELECT * FROM person WHERE id={id}").fetchone()
+
+    return jsonify(user)
 
 # Insert payment for id
 @bp.route("/add_user_payment", methods=["POST"])
