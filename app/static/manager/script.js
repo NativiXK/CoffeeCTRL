@@ -56,7 +56,7 @@ async function get_user_by_id(user_id)
 }
 
 // Edit payment modal to display payment information
-async function PaymentEvent(user_id) {
+async function PaymentModalForUser(user_id) {
     // Get payment form elements
     let user = await get_user_by_id(user_id);
     console.log(user);
@@ -70,11 +70,13 @@ async function PaymentEvent(user_id) {
 }
 
 // Customize edit modal to display user information and payments
-async function EditEvent(user_id) {
+async function EditModalForUser(user_id) {
 
     let user = await get_user_by_id(user_id);
 
     $("#edit-name").val(user["name"]);
+    $("#edit-confirm").click();
+
     $("#EditModal").modal("show");
     user_edit_commit(user_id);
 }
@@ -87,8 +89,8 @@ function row_buttons_events()
     for (let index = 0; index < rows_id.length; index++) {
         let user_id = rows_id[index].innerHTML.trim();
         
-        var payEvent = function(){ PaymentEvent(user_id) };
-        var editEvent = function(){ EditEvent(user_id) };
+        var ShowPayModal_Event = function(){ PaymentModalForUser(user_id) };
+        var ShowEditModal_Event = function(){ EditModalForUser(user_id) };
 
         //Get buttons
         const PaymentButton = document.getElementById("pay-" + user_id);

@@ -151,13 +151,26 @@
                         <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     </div>
                     <input type="number" id="edit-userid" hidden>
-                    <input class="form-control" name="edit-name" id="edit-name" readonly>
+                    <input class="form-control" name="edit-name" id="edit-name">
                 </div>
 
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">E-mail</span>
+                    </div>
+                    <input class="form-control" type="email" name="edit-email" id="edit-email">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Area</span>
+                    </div>
+                    <input class="form-control" type="email" name="edit-email" id="edit-email">
+                </div>
 
                 <!-- Payment confirmation or closure -->
                 <div class="input-group mb-3 d-flex justify-content-around">
-                    <input class="btn btn-success m-2 mb-2" id="edit-confirm" type="button" value="Confirm">
+                    <input class="btn btn-success m-2 mb-2" id="edit-confirm" type="button" value="Save">
                     <input class="btn btn-danger m-2 mb-2" type="button" value="Cancel" data-dismiss="modal" aria-label="Close">
                 </div>
             </form>
