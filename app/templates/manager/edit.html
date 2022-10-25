@@ -102,14 +102,15 @@
                     <input type="number" id="pay-userid" hidden>
                     <input class="form-control" name="pay-name" id="pay-name" readonly>
                 </div>
+
                 <!-- Payment date -->
-                <div class="input-group date mb-3">
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
                     </div>
-                    <input class="date form-control" type="date" name="pay-date" id="pay-date" placeholder="dd-mm-yyyy" value="" min="2020-02-20" required>
-
+                    <input class="form-control" type="text" name="pay-date" id="pay-date" min="2020-02-20" required>
                 </div>
+
                 <!-- Payment value -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -117,6 +118,7 @@
                     </div>
                     <input class="form-control" type="number" min="0" name="pay-value" id="pay-value" placeholder="R$" required>
                 </div>
+
                 <!-- Payment discount -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -124,6 +126,7 @@
                     </div>
                     <input class="form-control" type="number" min="0" name="pay-discount" id="pay-discount" placeholder="R$" required>
                 </div>
+
                 <!-- Payment confirmation or closure -->
                 <div class="input-group mb-3 d-flex justify-content-around">
                     <input class="btn btn-success m-2 mb-2" id="pay-confirm" type="button" value="Confirm">
@@ -165,7 +168,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Area</span>
                     </div>
-                    <input class="form-control" type="email" name="edit-email" id="edit-email">
+                    <input class="form-control" type="text" name="edit-area" id="edit-area">
                 </div>
 
                 <!-- Payment confirmation or closure -->

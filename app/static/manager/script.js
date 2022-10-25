@@ -1,9 +1,7 @@
 let last_collapse = 0;
 
 $('.collapse').collapse();
-$(".date").datepicker({
-    format: "dd-mm-yyyy",
-  });
+
 
 // Toggle collapsable element by its id
 function toggle_collapse(id)
@@ -17,26 +15,26 @@ function toggle_collapse(id)
     last_collapse = id;
 }
 
-async function user_payment_commit(user_id)
+async function user_payment_commit(user_data)
 {
     let response = await
         fetch(window.location.origin + '/API/add_user_payment', {
             method : 'POST', 
             headers: {'Content-Type': 'application/json'},
-            body : JSON.stringify({id : user_id})})
+            body : user_data})
     
     let data = await response.json()
     
     console.log(data);
 }
 
-async function user_edit_commit(user_id)
+async function user_edit_commit(user_data)
 {
     let response = await
     fetch(window.location.origin + '/API/edit_user', {
         method : 'POST',
         headers: {'Content-Type': 'application/json'},
-        body : JSON.stringify({id : user_id})})
+        body : user_data});
 
     let data = await response.json()
     
@@ -61,12 +59,30 @@ async function PaymentModalForUser(user_id) {
     let user = await get_user_by_id(user_id);
     console.log(user);
     
+    $("#pay-userid").val(user["id"]);
     $("#pay-name").val(user["name"]);
-    $("#pay-date").val("26/01/1998");
-
+    $("#pay-date").val( moment().format('DD/MM/YYYY') );
+    $("#pay-confirm").click(save_user_payment);
+    
     $("#PaymentModal").modal("show");
+    
+}
 
-    user_payment_commit(user_id);
+async function save_user_payment() {
+
+    const date = new Date();
+
+    let user_data = JSON.stringify({
+        user_id : $("#pay-userid").val(),
+        date    : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+        value   : $("#pay-value").val(),
+        discount: $("#pay-discount").val()
+    });
+    console.log(user_data);
+    await  user_payment_commit(user_data);
+
+    $("#PaymentModal").modal("hide");
+    location.reload();
 }
 
 // Customize edit modal to display user information and payments
@@ -74,11 +90,32 @@ async function EditModalForUser(user_id) {
 
     let user = await get_user_by_id(user_id);
 
+    $("#edit-userid").val(user["id"])
     $("#edit-name").val(user["name"]);
-    $("#edit-confirm").click();
+    $("#edit-email").val(user["email"]);
+    $("#edit-area").val(user["area"]);
+
+    $("#edit-confirm").click(save_user_edit);
 
     $("#EditModal").modal("show");
-    user_edit_commit(user_id);
+    
+}
+
+async function save_user_edit() {
+
+    let user_data = JSON.stringify({
+        id      : $("#edit-userid").val(),
+        name    : $("#edit-name").val(),
+        email   : $("#edit-email").val(),
+        area    : $("#edit-area").val() 
+    });
+    
+    console.log(user_data);
+
+    await user_edit_commit(user_data);
+
+    $("#EditModal").modal("hide");
+    location.reload();
 }
 
 // Get all buttons of the collapsable rows to bind the event listeners
@@ -92,12 +129,10 @@ function row_buttons_events()
         var ShowPayModal_Event = function(){ PaymentModalForUser(user_id) };
         var ShowEditModal_Event = function(){ EditModalForUser(user_id) };
 
-        //Get buttons
-        const PaymentButton = document.getElementById("pay-" + user_id);
-        const EditButton = document.getElementById("edit-" + user_id);
+        //Add event for each button in rows
+        $("#pay-" + user_id).click(ShowPayModal_Event.bind(user_id));
+        $("#edit-" + user_id).click(ShowEditModal_Event.bind(user_id));
 
-        PaymentButton.addEventListener('click', payEvent.bind(user_id));
-        EditButton.addEventListener('click', editEvent.bind(user_id));
     }
 }
 

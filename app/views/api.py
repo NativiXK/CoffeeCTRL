@@ -1,4 +1,4 @@
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint, flash
 from app import db
 
 bp = Blueprint('API', __name__, url_prefix='/API')
@@ -16,19 +16,33 @@ def API_get_user_by_id():
 
     return jsonify(user)
 
-# Insert payment for id
-@bp.route("/add_user_payment", methods=["POST"])
-def API_add_user_payment():
-    user_id = request.get_json();
-    print (f"Payment added for user {user_id}")
-    return jsonify({"Todo" : "Answer"})
-
 # Edit user information with json provided
 @bp.route("/edit_user", methods=["POST"])
 def API_edit_user():
-    user_id = request.get_json();
-    print (f"User {user_id} edited")
-    return jsonify({"Todo" : "Answer"})
+    user = request.get_json();
+    print(user)
+
+    cursor = db.get_db()
+    query = f"UPDATE person SET name = \"{user['name']}\", email = \"{user['email']}\", area = \"{user['area']}\" WHERE id = {user['id']}"
+    cursor.execute(query)
+    cursor.commit()
+
+    flash (f"User {user['name']} edited", "message")
+    return "1", 200
+
+@bp.route("/add_user_payment", methods=["POST"])
+def API_add_user_payment():
+
+    payment = request.get_json();
+    print(payment)
+
+    cursor = db.get_db()
+    query = f"INSERT INTO payment (date, value, discount, person_id) VALUES (\"{payment['date']}\", {payment['value']}, {payment['discount']}, {payment['user_id']})"
+    print(query)
+    cursor.execute(query)
+    cursor.commit()
+
+    return "1", 200
 
 # Insert purchase
 # 1 first insert items

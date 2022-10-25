@@ -1,5 +1,4 @@
-import functools, click
-from operator import ne
+import functools
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -46,7 +45,7 @@ def register():
             else:
                 return redirect(url_for("auth.login"))
 
-        flash(error)
+        flash(error, 'error')
 
     return render_template('auth/register.html')
 
@@ -74,7 +73,7 @@ def login():
 
             return redirect(url_for('edit'))
 
-        flash(error)
+        flash(error, 'error')
 
     return redirect(url_for('index'))
 
