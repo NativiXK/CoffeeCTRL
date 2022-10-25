@@ -1,7 +1,14 @@
 let last_collapse = 0;
+let date = new Date();
 
 $('.collapse').collapse();
 
+$(function() {
+    $( "#pay-date" ).datepicker({
+        dateFormat : "dd/mm/yy",
+        currentText: "Now"
+    });
+});
 
 // Toggle collapsable element by its id
 function toggle_collapse(id)
@@ -58,10 +65,13 @@ async function PaymentModalForUser(user_id) {
     // Get payment form elements
     let user = await get_user_by_id(user_id);
     console.log(user);
-    
+
+    var current_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    console.log(current_date);
+
     $("#pay-userid").val(user["id"]);
     $("#pay-name").val(user["name"]);
-    $("#pay-date").val( moment().format('DD/MM/YYYY') );
+    $("#pay-date").val(current_date);
     $("#pay-confirm").click(save_user_payment);
     
     $("#PaymentModal").modal("show");
@@ -70,7 +80,9 @@ async function PaymentModalForUser(user_id) {
 
 async function save_user_payment() {
 
-    const date = new Date();
+    let date = new Date;
+    date.parse($("#pay-date").val());
+    console.log(date);
 
     let user_data = JSON.stringify({
         user_id : $("#pay-userid").val(),
@@ -79,10 +91,10 @@ async function save_user_payment() {
         discount: $("#pay-discount").val()
     });
     console.log(user_data);
-    await  user_payment_commit(user_data);
+    // await  user_payment_commit(user_data);
 
     $("#PaymentModal").modal("hide");
-    location.reload();
+    // location.reload();
 }
 
 // Customize edit modal to display user information and payments

@@ -95,3 +95,7 @@ element {
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
 }
+
+.ui-datepicker{
+    z-index: 99999 !important
+};
