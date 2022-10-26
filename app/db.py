@@ -31,7 +31,7 @@ def init_db():
 
 def get_user_payments(name : str = "") -> dict:
     db = get_db()
-    query = "SELECT person.id as id, person.name as name FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
+    query = "SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
     people = db.execute(query).fetchall()
 
     for person in people:

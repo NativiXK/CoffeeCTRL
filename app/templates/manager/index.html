@@ -39,7 +39,7 @@
     <table class="table table-striped table-hover text-center">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col" hidden>ID</th>
                 <th scope="col" class="col-name">Nome</th>
                 <th scope="col">Jan</th>
                 <th scope="col">Fev</th>
@@ -58,7 +58,7 @@
         <tbody>
             {% for user in users %}
             <tr scope="row">
-                <td class="col-id">{{ user.id }}</td>
+                <td class="col-id" hidden>{{ user.id }}</td>
                 <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
                     {% if (month.value - month.discount) == 0 %}
