@@ -66,8 +66,18 @@ div#coffee-table
     margin: auto 10px;
     display: flex;
     align-content: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
+}
+
+#btn-login
+{
+    margin-left: auto;
+}
+
+#btn-logout
+{
+    margin-left: auto;
 }
 
 #header-filter

@@ -22,8 +22,7 @@ function toggle_collapse(id)
     last_collapse = id;
 }
 
-async function user_payment_commit(user_data)
-{
+async function user_payment_commit(user_data) {
     let response = await
         fetch(window.location.origin + '/API/add_user_payment', {
             method : 'POST', 
@@ -32,11 +31,9 @@ async function user_payment_commit(user_data)
     
     let data = await response.json()
     
-    console.log(data);
 }
 
-async function user_edit_commit(user_data)
-{
+async function user_edit_commit(user_data) {
     let response = await
     fetch(window.location.origin + '/API/edit_user', {
         method : 'POST',
@@ -45,7 +42,16 @@ async function user_edit_commit(user_data)
 
     let data = await response.json()
     
-    console.log(data);
+}
+
+async function new_user_commit(user_data) {
+    let response = await
+    fetch(window.location.origin + '/API/add_new_user', {
+        method : 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body : user_data});
+
+    let data = await response.json()
 }
 
 async function get_user_by_id(user_id)
@@ -64,10 +70,8 @@ async function get_user_by_id(user_id)
 async function PaymentModalForUser(user_id) {
     // Get payment form elements
     let user = await get_user_by_id(user_id);
-    console.log(user);
 
     var current_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-    console.log(current_date);
 
     $("#pay-userid").val(user["id"]);
     $("#pay-name").val(user["name"]);
@@ -80,35 +84,47 @@ async function PaymentModalForUser(user_id) {
 
 async function save_user_payment() {
 
-    let date = new Date;
-    date.parse($("#pay-date").val());
-    console.log(date);
-
     let user_data = JSON.stringify({
         user_id : $("#pay-userid").val(),
-        date    : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+        date    : $("#pay-date").val(),
         value   : $("#pay-value").val(),
         discount: $("#pay-discount").val()
     });
-    console.log(user_data);
-    // await  user_payment_commit(user_data);
+    
+    await  user_payment_commit(user_data);
 
     $("#PaymentModal").modal("hide");
-    // location.reload();
+    location.reload();
 }
 
 // Customize edit modal to display user information and payments
 async function EditModalForUser(user_id) {
+    console.log(user_id);
+    if (typeof user_id !== "undefined")
+    {
+       let user = await get_user_by_id(user_id);
 
-    let user = await get_user_by_id(user_id);
+        $("#EditModal-title").text("EDIT");
+        $("#edit-userid").val(user["id"]);
+        $("#edit-name").val(user["name"]);
+        $("#edit-email").val(user["email"]);
+        $("#edit-area").val(user["area"]);
 
-    $("#edit-userid").val(user["id"])
-    $("#edit-name").val(user["name"]);
-    $("#edit-email").val(user["email"]);
-    $("#edit-area").val(user["area"]);
+        $("#edit-confirm").unbind('click');
+        $("#edit-confirm").click(save_user_edit); 
+    }
+    else // Show add modal
+    {
+        $("#EditModal-title").text("ADD NEW USER");
+        $("#edit-userid").val("");
+        $("#edit-name").val("");
+        $("#edit-email").val("");
+        $("#edit-area").val("");
 
-    $("#edit-confirm").click(save_user_edit);
-
+        $("#edit-confirm").unbind('click');
+        $("#edit-confirm").click(add_new_user);
+    }
+    
     $("#EditModal").modal("show");
     
 }
@@ -121,13 +137,26 @@ async function save_user_edit() {
         email   : $("#edit-email").val(),
         area    : $("#edit-area").val() 
     });
-    
-    console.log(user_data);
 
     await user_edit_commit(user_data);
 
     $("#EditModal").modal("hide");
     location.reload();
+}
+
+async function add_new_user() {
+
+    let user_data = JSON.stringify({
+        name    : $("#edit-name").val(),
+        email   : $("#edit-email").val(),
+        area    : $("#edit-area").val() 
+    });
+
+    await new_user_commit(user_data);
+
+    $("#EditModal").modal("hide");
+    location.reload();
+
 }
 
 // Get all buttons of the collapsable rows to bind the event listeners
@@ -149,6 +178,19 @@ function row_buttons_events()
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    $("#btn-logout").click(
+        function() {
+            window.location.href='auth/logout';
+        }
+    );
+    
+    $("#btn-add-person").click(
+        function() {
+            EditModalForUser();
+        }
+    );
+
+
     // Add event listeners
     row_buttons_events();
 

@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
-{% block style %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='manager/style.css') }}">
+{% block head %}
+    <script src="{{ url_for('static', filename='manager/script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manager/style.css') }}">
 {% endblock %}
 
 {% block title %} Coffee {% endblock %}
@@ -21,7 +22,8 @@
     </div>
 
     <div class="header-tools">
-        <button type="submit" class="btn btn-secondary" onclick="window.location.href='auth/logout';">Logout</button>
+        <button class="btn btn-success" id="btn-add-person">Adicionar</button>
+        <button class="btn btn-secondary" id="btn-logout">Logout</button>
     </div>
 
     <div id="header-filter">
@@ -62,12 +64,12 @@
                 <th class="col-id"> {{ user.id }} </td>
                 <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
-                    {% if month.value == '-' %}
-                        <td id="month-{{month}}" style="background-color: lightgrey;">-</td>
+                    {% if (month.value - month.discount) == 0 %}
+                        <td style="background-color: lightgrey;"> - </td>
                     {% elif month.value %}
-                        <td id="month-{{month}}" style="background-color: lightgreen;">R${{ month.value }}</td>    
+                        <td style="background-color: lightgreen;">R${{ month.value - month.discount }}</td>    
                     {% else %}
-                        <td id="month-{{month}}" style="background-color: lightcoral;">R${{ month.value }}</td>
+                        <td style="background-color: lightcoral;">R${{ month.value - month.discount }}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -89,7 +91,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="PaymentModal">PAYMENT</h5>
+          <h5 class="modal-title" id="PaymentModal-title">PAYMENT</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -143,7 +145,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="EditModal">EDIT</h5>
+          <h5 class="modal-title" id="EditModal-title">EDIT</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

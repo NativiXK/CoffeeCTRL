@@ -39,7 +39,7 @@ def get_user_payments(name : str = "") -> dict:
         pays = db.execute(query).fetchall()
         person["months"] = [
             {"month" : i, 
-            "value" : '-',
+            "value" : 0,
             "discount" : 0} for i in range(1, 13)]
         
         for pay in pays:

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block style %}
+{% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='manager/style.css') }}">
 {% endblock %}
 
@@ -21,7 +21,7 @@
     </div>
 
     <div class="header-tools">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal">Login</button>
+        <button type="button" class="btn btn-primary" id="btn-login" data-toggle="modal" data-target="#LoginModal">Login</button>
     </div>
     
     <div id="header-filter">
@@ -61,12 +61,12 @@
                 <td class="col-id">{{ user.id }}</td>
                 <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
-                    {% if month.value == '-' %}
-                        <td style="background-color: lightgrey;">-</td>
+                    {% if (month.value - month.discount) == 0 %}
+                        <td style="background-color: lightgrey;"> - </td>
                     {% elif month.value %}
-                        <td style="background-color: lightgreen;">R${{ month.value }}</td>    
+                        <td style="background-color: lightgreen;">R${{ month.value - month.discount }}</td>    
                     {% else %}
-                        <td style="background-color: lightcoral;">R${{ month.value }}</td>
+                        <td style="background-color: lightcoral;">R${{ month.value - month.discount }}</td>
                     {% endif %}
                 {% endfor %}
             </tr>

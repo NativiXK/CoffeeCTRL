@@ -1,5 +1,6 @@
 from flask import jsonify, request, Blueprint, flash
 from app import db
+from datetime import date
 
 bp = Blueprint('API', __name__, url_prefix='/API')
 
@@ -19,8 +20,7 @@ def API_get_user_by_id():
 # Edit user information with json provided
 @bp.route("/edit_user", methods=["POST"])
 def API_edit_user():
-    user = request.get_json();
-    print(user)
+    user = request.get_json()
 
     cursor = db.get_db()
     query = f"UPDATE person SET name = \"{user['name']}\", email = \"{user['email']}\", area = \"{user['area']}\" WHERE id = {user['id']}"
@@ -30,11 +30,24 @@ def API_edit_user():
     flash (f"User {user['name']} edited", "message")
     return "1", 200
 
+@bp.route("/add_new_user", methods=["POST"])
+def API_add_new_user():
+    user = request.get_json()
+
+    cursor = db.get_db()
+    query = f"INSERT INTO person (name, email, area) VALUES (\"{user['name']}\", \"{user['email']}\", \"{user['area']}\")"
+    cursor.execute(query)
+    cursor.commit()
+
+    return "1", 200
+
 @bp.route("/add_user_payment", methods=["POST"])
 def API_add_user_payment():
 
     payment = request.get_json();
     print(payment)
+
+    payment["date"] = '-'.join(payment["date"].split('/')[::-1])
 
     cursor = db.get_db()
     query = f"INSERT INTO payment (date, value, discount, person_id) VALUES (\"{payment['date']}\", {payment['value']}, {payment['discount']}, {payment['user_id']})"
