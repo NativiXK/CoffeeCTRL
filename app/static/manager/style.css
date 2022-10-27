@@ -11,7 +11,7 @@
 
 div#coffee-table
 {   
-    margin: 0 2% 0 2%;
+    margin: 1% 2% 0 2%;
 }
 
 div#cash-box
@@ -21,7 +21,6 @@ div#cash-box
     align-items: center;
     flex-direction: row;
     margin: 0 2% 0 2%;
-    padding: 1%;
     height: auto;
     border: none;
     border-radius: 0;
@@ -160,6 +159,7 @@ header
     justify-content: space-between;
     width: 100%;
     padding: 20px;
+    margin-bottom: 1%;
     height: 5%;
     max-height: 150px;
     background-color: lavender;

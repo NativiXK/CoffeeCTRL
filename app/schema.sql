@@ -1,9 +1,7 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS purchase;
 DROP TABLE IF EXISTS person;
-
 
 CREATE TABLE IF NOT EXISTS user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,26 +27,13 @@ CREATE TABLE IF NOT EXISTS payment (
     FOREIGN KEY (person_id) REFERENCES person (id)
 );
 
--- Create table items
-CREATE TABLE IF NOT EXISTS items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    coffee_amount INTEGER,
-    coffee_value REAL,
-    sugar_amount INTEGER,
-    sugar_value REAL,
-    crackers_amount INTEGER,
-    crackers_value REAL
-);
-
 -- Create table purchase
 CREATE TABLE IF NOT EXISTS purchase (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date DATE NOT NULL,
     value REAL NOT NULL,
-    description TEXT,
-    items_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
     person_id INTEGER NOT NULL,
-    FOREIGN KEY (items_id) REFERENCES items (id),
     FOREIGN KEY (person_id) REFERENCES person (id)
 );
 
@@ -78,9 +63,7 @@ INSERT INTO payment (date, value, discount, person_id) VALUES
     ("2022-09-27", 10.0, 0.0, 2),
     ("2022-10-05", 10.0, 0.0, 5);
 
-INSERT INTO items (coffee_amount, coffee_value, sugar_amount, sugar_value, crackers_amount, crackers_value) VALUES 
-    (4, 17.58, 1, 2.4, 0, 0),
-    (4, 13.58, 2, 1.5, 1, 8.56);
-
-INSERT INTO purchase (date, value, description, items_id, person_id) VALUES 
-    ("2022-09-17", 88.56, "", 2, 1);
+INSERT INTO purchase (date, value, description, person_id) VALUES 
+    ("2022-09-17", 88.56, "CAFÉ", 1),
+    ("2022-10-25", 6.3, "AÇÚCAR", 1),
+    ("2022-10-14", 67.5, "CAFÉ", 1);

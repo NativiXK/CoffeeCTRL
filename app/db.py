@@ -47,7 +47,7 @@ def get_user_payments(name : str = "") -> dict:
             
     return people
 
-def get_income(month = 13):
+def get_income(month = 13): # 13 means yearly filter
 
     db = get_db()
     query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == {month}" if month >= 1 and month <= 12 else "")
@@ -56,6 +56,16 @@ def get_income(month = 13):
     print(income)
 
     return income
+
+def get_cash_spent(month = 13): # 13 means yearly filter
+    
+    db = get_db()
+    query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == {month}" if month >= 1 and month <= 12 else "")
+    print(query)
+    spent = db.execute(query).fetchone()["spent"]
+    print(spent)
+
+    return spent
 
 @click.command('init-db')
 def init_db_command():

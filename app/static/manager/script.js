@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             update_payment_total();
         }
     )
-    
+
 
     // Add event listeners
     row_buttons_events();

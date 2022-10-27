@@ -1,6 +1,5 @@
 from flask import jsonify, request, Blueprint, flash
 from app import db
-from datetime import date
 
 bp = Blueprint('API', __name__, url_prefix='/API')
 
