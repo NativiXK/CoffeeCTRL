@@ -38,8 +38,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="card d-flex flex-row justify-content-around" id="cash-box">
-    <div class="card cash-income">
+<div class="card" id="cash-box">
+    <div class="card cash" id="cash-income">
+        <h3>Income</h3>
         <input type="text" readonly>
         <select name="cash-income-filter" id="cash-income-filter">
             <option value="yearly" selected>Yearly</option>
@@ -47,15 +48,17 @@
         </select>
     </div>
 
-    <div class="card cash-spent">
+    <div class="card cash" id="cash-spent">
+        <h3>Spent</h3>
         <input type="text" readonly>
         <select name="cash-total-filter" id="cash-total-filter">
             <option value="yearly" selected>Yearly</option>
             <option value="1">Jan</option>
         </select>
-    </div class="card cash-total">
+    </div>
 
-    <div class="card cash-total">
+    <div class="card cash" id="cash-total">
+        <h3>Total</h3>
         <input type="text" readonly>
         <select name="cash-total-filter" id="cash-total-filter">
             <option value="yearly" selected>Yearly</option>
