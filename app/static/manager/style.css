@@ -15,6 +15,12 @@ div#coffee-table
     padding: 5px;
 }
 
+div#cash-box
+{
+    margin: 1% 2% 0 2%;
+    padding: 5px;
+}
+
 #col-name
 {
     min-width: 175px;
@@ -34,9 +40,15 @@ div#coffee-table
     cursor: pointer;
 }
 
+.user-info div
+{
+    margin: 0 auto;
+}
+
 .user-buttons
 {
-    width: max-content;
+    width: 20%;
+    min-width: min-content;
 }
 
 .header-title

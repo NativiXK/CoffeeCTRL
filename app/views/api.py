@@ -50,6 +50,16 @@ def API_add_user_payment():
     payment["date"] = '-'.join(payment["date"].split('/')[::-1])
 
     cursor = db.get_db()
+    # Check if there is a payment on the month strftime('%m', payment.date)
+    query = f"SELECT * FROM payment WHERE (strftime('%m', payment.date) + 1) == strftime('%m', '{payment['date']}') AND payment.person_id == {payment['user_id']}"
+    print(query)
+    pays = cursor.execute(query).fetchall()
+
+    if pays:
+        print(pays)
+        flash("PAYMENT NOT REGISTERED! There is already a payment for the given month", "error")
+        return "0", 400
+
     query = f"INSERT INTO payment (date, value, discount, person_id) VALUES (\"{payment['date']}\", {payment['value']}, {payment['discount']}, {payment['user_id']})"
     print(query)
     cursor.execute(query)

@@ -177,6 +177,14 @@ function row_buttons_events()
     }
 }
 
+function update_payment_total()
+{
+    let value = parseFloat($("#pay-value").val());
+    let discount = parseFloat($("#pay-discount").val());
+    
+    $("#pay-total").val("R$ " + (value - discount));
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     $("#btn-logout").click(
         function() {
@@ -189,7 +197,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
             EditModalForUser();
         }
     );
+    
+    $("#pay-value").change(
+        function() {
+            update_payment_total();
+        }
+    )
 
+    $("#pay-discount").change(
+        function() {
+            update_payment_total();
+        }
+    )
+    
 
     // Add event listeners
     row_buttons_events();
