@@ -3,7 +3,8 @@ let date = new Date();
 
 $('.collapse').collapse();
 
-$(function() {
+$(function() 
+{
     $( "#pay-date" ).datepicker({
         dateFormat : "dd/mm/yy",
         currentText: "Now"
@@ -22,7 +23,8 @@ function toggle_collapse(id)
     last_collapse = id;
 }
 
-async function user_payment_commit(user_data) {
+async function user_payment_commit(user_data) 
+{
     let response = await
         fetch(window.location.origin + '/API/add_user_payment', {
             method : 'POST', 
@@ -33,7 +35,8 @@ async function user_payment_commit(user_data) {
     
 }
 
-async function user_edit_commit(user_data) {
+async function user_edit_commit(user_data) 
+{
     let response = await
     fetch(window.location.origin + '/API/edit_user', {
         method : 'POST',
@@ -44,7 +47,8 @@ async function user_edit_commit(user_data) {
     
 }
 
-async function new_user_commit(user_data) {
+async function new_user_commit(user_data) 
+{
     let response = await
     fetch(window.location.origin + '/API/add_new_user', {
         method : 'POST',
@@ -82,7 +86,8 @@ async function PaymentModalForUser(user_id) {
     
 }
 
-async function save_user_payment() {
+async function save_user_payment() 
+{
 
     let user_data = JSON.stringify({
         user_id : $("#pay-userid").val(),
@@ -98,7 +103,8 @@ async function save_user_payment() {
 }
 
 // Customize edit modal to display user information and payments
-async function EditModalForUser(user_id) {
+async function EditModalForUser(user_id) 
+{
     console.log(user_id);
     if (typeof user_id !== "undefined")
     {
@@ -129,7 +135,8 @@ async function EditModalForUser(user_id) {
     
 }
 
-async function save_user_edit() {
+async function save_user_edit() 
+{
 
     let user_data = JSON.stringify({
         id      : $("#edit-userid").val(),
@@ -144,7 +151,8 @@ async function save_user_edit() {
     location.reload();
 }
 
-async function add_new_user() {
+async function add_new_user() 
+{
 
     let user_data = JSON.stringify({
         name    : $("#edit-name").val(),
@@ -159,6 +167,24 @@ async function add_new_user() {
 
 }
 
+async function RemoveUserById(user_id)
+{
+    if (confirm("Do you really want to remove this user?"))
+    {
+            let user_data = JSON.stringify({
+                user_id : user_id
+            });
+        
+            let response = await fetch("/API/remove_user_by_id", {
+                method : 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body : user_data});
+        
+            let data = await response.json();
+            window.location.reload();
+    }
+}
+
 // Get all buttons of the collapsable rows to bind the event listeners
 function row_buttons_events() 
 {
@@ -169,10 +195,12 @@ function row_buttons_events()
         
         var ShowPayModal_Event = function(){ PaymentModalForUser(user_id) };
         var ShowEditModal_Event = function(){ EditModalForUser(user_id) };
+        var RemoveUser = function() { RemoveUserById(user_id) };
 
         //Add event for each button in rows
         $("#pay-" + user_id).click(ShowPayModal_Event.bind(user_id));
         $("#edit-" + user_id).click(ShowEditModal_Event.bind(user_id));
+        $("#remove-" + user_id).click(RemoveUser.bind(user_id));
 
     }
 }

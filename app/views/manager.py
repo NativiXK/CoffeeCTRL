@@ -21,6 +21,6 @@ def edit_payments():
         name = request.form.get("name").strip()
 
         if name:
-            return render_template("manager/edit.html", users = db.get_user_payments(name))
+            return render_template("manager/edit.html", users = db.get_user_payments(name), income = db.get_income())
      
-    return render_template("manager/edit.html", users = db.get_user_payments())
+    return render_template("manager/edit.html", users = db.get_user_payments(), income = db.get_income())

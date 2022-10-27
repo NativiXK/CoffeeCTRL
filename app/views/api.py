@@ -67,6 +67,19 @@ def API_add_user_payment():
 
     return "1", 200
 
+@bp.route("/remove_user_by_id", methods=["POST"])
+def API_remove_user_by_id():
+    user_id = request.get_json()["user_id"]
+
+    cursor = db.get_db()
+    query = f"DELETE FROM payment WHERE person_id == {user_id}"
+    cursor.execute(query)
+    query = f"DELETE FROM person WHERE id == {user_id}"
+    cursor.execute(query)
+    cursor.commit()
+
+    return "1", 200
+
 # Insert purchase
 # 1 first insert items
 # INSERT INTO items (coffee_amount, coffee_value, sugar_amount, sugar_value, crackers_amount, crackers_value) VALUES (?, ?, ?, ?, ?, ?)

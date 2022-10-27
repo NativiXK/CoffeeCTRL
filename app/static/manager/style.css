@@ -11,8 +11,7 @@
 
 div#coffee-table
 {   
-    margin: 1% 2% 0 2%;
-    padding: 5px;
+    margin: 0 2% 0 2%;
 }
 
 div#cash-box
@@ -21,17 +20,18 @@ div#cash-box
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    margin: 1% 2% 0 2%;
-    padding: 5px;
+    margin: 0 2% 0 2%;
+    padding: 1%;
     height: auto;
     border: none;
+    border-radius: 0;
 }
 
 .cash
 {
     width: 15rem;
     height: 10rem;
-    border: none;
+    border: 1px solid lightgray;
     border-radius: 10px;
     padding: 5px;
     text-align: center;
@@ -41,6 +41,9 @@ div#cash-box
 
 .cash input
 {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: 400;
     height: 40%;
     border: none;
     border-radius: 10px;

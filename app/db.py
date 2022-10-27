@@ -47,6 +47,16 @@ def get_user_payments(name : str = "") -> dict:
             
     return people
 
+def get_income(month = 13):
+
+    db = get_db()
+    query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == {month}" if month >= 1 and month <= 12 else "")
+    print(query)
+    income = db.execute(query).fetchone()["income"]
+    print(income)
+
+    return income
+
 @click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables."""
