@@ -56,6 +56,7 @@ div#cash-box
     font-size: larger;
     line-height: 15px;
     border: none;
+    border-radius: 5px;
     height: 20%;
 }
 
@@ -94,6 +95,7 @@ div#cash-box
     display: inline-flex;
     height: auto;
     max-width: fit-content;
+    min-width: fit-content;
 }
 
 #header-img
@@ -101,24 +103,27 @@ div#cash-box
     display: contents;
     height: auto;
     width: 150px;
+    min-width: 40px;
     margin: auto;
 }
 
 #header-img svg
 {
     object-fit: scale-down;
-    max-height: 100%;
+    max-height: 70px;
+    min-height: 70px;
 }
 
 #header-title-text
 {
     margin: auto 0;
     margin-left: 20px;
+    font-size: 1.8rem;
 }
 
 .header-tools
 {
-    width: 60%;
+    width: 40%;
     margin: auto 10px;
     display: flex;
     align-content: center;
@@ -128,8 +133,8 @@ div#cash-box
 
 .header-tools button
 {
-    width: auto;
-    margin-left: 3%;
+    width: 100%;
+    margin: 5px;
 }
 
 #btn-login
@@ -141,7 +146,8 @@ div#cash-box
 #btn-logout
 {
     width: max-content;
-    margin-left: auto;
+    height: min-content;
+    margin: 10px;
 }
 
 #header-filter
@@ -156,6 +162,7 @@ header
 {
     display: flex;
     align-content: center;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
     padding: 20px;
