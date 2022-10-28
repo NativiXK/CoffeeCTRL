@@ -50,10 +50,9 @@ def get_user_payments(name : str = "") -> dict:
 def get_income(month = 13): # 13 means yearly filter
 
     db = get_db()
-    query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == {month}" if month >= 1 and month <= 12 else "")
+    query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
     print(query)
     income = db.execute(query).fetchone()["income"]
-    print(income)
 
     return income
 
@@ -63,7 +62,6 @@ def get_cash_spent(month = 13): # 13 means yearly filter
     query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == {month}" if month >= 1 and month <= 12 else "")
     print(query)
     spent = db.execute(query).fetchone()["spent"]
-    print(spent)
 
     return spent
 

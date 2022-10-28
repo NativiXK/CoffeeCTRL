@@ -1,5 +1,6 @@
-from flask import jsonify, request, Blueprint, flash
+from flask import jsonify, render_template, request, Blueprint, flash
 from app import db
+import calendar
 
 bp = Blueprint('API', __name__, url_prefix='/API')
 
@@ -78,6 +79,22 @@ def API_remove_user_by_id():
     cursor.commit()
 
     return "1", 200
+
+@bp.route("/cash_report", methods=["POST"])
+def API_cash_report():
+    data = request.get_json()
+
+    report_type = data["type"]
+    month_num = int(data["month"])
+    month_name = calendar.month_name[month_num - 1].upper()
+
+    cursor = db.get_db()
+    query = f"SELECT person.name as name, payment.date as date, payment.value as value, payment.discount as discount FROM person, payment WHERE strftime('%m', payment.date) == '{('0' + str(month_num) if month_num < 10 else str(month_num))}' AND person.id == payment.person_id"
+
+    income = db.get_income(month_num)
+    logs = cursor.execute(query).fetchall()
+
+    return jsonify({"html" : render_template("modals/report.html", title = (report_type.upper() + " REPORT"), month = month_name, income = income, logs = logs)})
 
 # Insert purchase
 # 1 first insert items
