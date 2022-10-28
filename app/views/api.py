@@ -82,19 +82,42 @@ def API_remove_user_by_id():
 
 @bp.route("/cash_report", methods=["POST"])
 def API_cash_report():
+    table = ""
+    cash = 0
     data = request.get_json()
 
     report_type = data["type"]
     month_num = int(data["month"])
     month_name = calendar.month_name[month_num - 1].upper()
+    
+    if report_type == "income":
+        table = "payment"
+    elif report_type == "spent":
+        table = "purchase"
+    else:
+        table = ""
 
     cursor = db.get_db()
-    query = f"SELECT person.name as name, payment.date as date, payment.value as value, payment.discount as discount FROM person, payment WHERE strftime('%m', payment.date) == '{('0' + str(month_num) if month_num < 10 else str(month_num))}' AND person.id == payment.person_id"
+    
+    query = f"SELECT person.name as name, {table}.date as date, {table}.value as value" + (f", {table}.discount as discount" if table == 'payment' else "") + f" FROM person, {table} WHERE person.id == {table}.person_id"
 
-    income = db.get_income(month_num)
+    if (month_num != 13):
+        query += f" AND strftime('%m', {table}.date) == '{('0' + str(month_num) if month_num < 10 else str(month_num))}'"
+    
+    query += f" ORDER BY {table}.date ASC"
+    print(query)
     logs = cursor.execute(query).fetchall()
 
-    return jsonify({"html" : render_template("modals/report.html", title = (report_type.upper() + " REPORT"), month = month_name, income = income, logs = logs)})
+    if (report_type == "income"):
+        cash = db.get_income(month_num)
+    elif (report_type == "spent"):
+        cash = db.get_cash_spent(month_num)
+    elif (report_type == "total"):
+        cash = db.get_income(month_num) - db.get_cash_spent(month_num)
+    else:
+        cash = 0
+
+    return jsonify({"html" : render_template("modals/report.html", report_type = report_type, title = (report_type.upper() + " CASH REPORT"), month = month_name, cash = cash, logs = logs)})
 
 # Insert purchase
 # 1 first insert items

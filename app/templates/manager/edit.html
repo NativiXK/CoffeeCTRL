@@ -46,7 +46,7 @@
             <h3>Income</h3>
             <input type="text" value="{{'R$%.2f' | format(income)}}" readonly>
             <select name="cash-income-filter" id="cash-income-filter">
-                <option value="yearly" selected>Yearly</option>
+                <option value="13" selected>Yearly</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option>
@@ -65,8 +65,8 @@
         <div class="card cash" id="cash-spent">
             <h3>Spent</h3>
             <input type="text" value="{{'R$%.2f' | format(spent)}}" readonly>
-            <select name="cash-total-filter" id="cash-total-filter">
-                <option value="yearly" selected>Yearly</option>
+            <select name="cash-spent-filter" id="cash-spent-filter">
+                <option value="13" selected>Yearly</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option>
@@ -86,7 +86,7 @@
             <h3>Total</h3>
             <input type="text" value="{{'R$%.2f' | format(income - spent)}}" readonly>
             <select name="cash-total-filter" id="cash-total-filter">
-                <option value="yearly" selected>Yearly</option>
+                <option value="13" selected>Yearly</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option>

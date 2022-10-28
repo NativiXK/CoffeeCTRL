@@ -54,16 +54,16 @@ def get_income(month = 13): # 13 means yearly filter
     print(query)
     income = db.execute(query).fetchone()["income"]
 
-    return income
+    return int(income) if income else 0
 
 def get_cash_spent(month = 13): # 13 means yearly filter
     
     db = get_db()
-    query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == {month}" if month >= 1 and month <= 12 else "")
+    query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
     print(query)
     spent = db.execute(query).fetchone()["spent"]
 
-    return spent
+    return int(spent) if spent else 0
 
 @click.command('init-db')
 def init_db_command():

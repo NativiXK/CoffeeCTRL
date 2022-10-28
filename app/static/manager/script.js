@@ -244,6 +244,42 @@ async function IncomeReportByMonth(month)
 
 }
 
+async function SpentReportByMonth(month)
+{
+    let month_num = parseInt($("#cash-spent-filter").val());
+
+    console.log(month_num);
+
+    let report = await API_GetReport("spent", month_num);
+    console.log(report); 
+
+    $(report["html"]).appendTo("body");
+    $("#ReportModal").modal("show");
+
+    $('#ReportModal').on('hidden.bs.modal', function (e) {
+        $("#ReportModal").remove();
+      })
+
+}
+
+async function TotalCashReportByMonth(month)
+{
+    let month_num = parseInt($("#cash-total-filter").val());
+
+    console.log(month_num);
+
+    let report = await API_GetReport("total", month_num);
+    console.log(report); 
+
+    $(report["html"]).appendTo("body");
+    $("#ReportModal").modal("show");
+
+    $('#ReportModal').on('hidden.bs.modal', function (e) {
+        $("#ReportModal").remove();
+      })
+
+}
+
 // Get all buttons of the collapsable rows to bind the event listeners
 function row_buttons_events() 
 {
@@ -298,7 +334,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     )
 
     $("#cash-income-filter").change(IncomeReportByMonth);
-
+    $("#cash-spent-filter").change(SpentReportByMonth);
     // Add event listeners
     row_buttons_events();
 
