@@ -47,7 +47,7 @@ div#cash-box
     border: none;
     border-radius: 10px;
     border-bottom: 5px solid black;
-    margin-bottom: 10px;
+    margin: auto 5px;
 }
 
 .cash select
@@ -56,8 +56,21 @@ div#cash-box
     font-size: larger;
     line-height: 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     height: 20%;
+    margin: auto 5px; 
+}
+
+.cash button
+{
+    display: inline-flex;
+    width: fit-content;
+    margin: auto;
+}
+
+.cash button svg
+{
+    margin-left: 10px;
 }
 
 #col-name
