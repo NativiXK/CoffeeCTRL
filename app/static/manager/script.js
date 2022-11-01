@@ -5,7 +5,7 @@ $('.collapse').collapse();
 
 $(function() 
 {
-    $( "#pay-date" ).datepicker({
+    $( ".datepicker" ).datepicker({
         dateFormat : "dd/mm/yy",
         currentText: "Now"
     });
@@ -23,14 +23,15 @@ function toggle_collapse(id)
     last_collapse = id;
 }
 
-function toMonthName(monthNumber) {
-    const date = new Date();
-    date.setMonth(monthNumber - 1);
-  
-    return date.toLocaleString('en-US', {
-      month: 'long',
-    });
-  }
+function toMonthName(monthNumber) 
+    {
+        const date = new Date();
+        date.setMonth(monthNumber - 1);
+
+        return date.toLocaleString('en-US', {
+        month: 'long',
+        });
+    }
 
 async function API_UserPaymentCommit(user_data) 
 {
@@ -120,8 +121,53 @@ async function API_GetReport(type, month)
     return report;
 }
 
+async function API_GetModal(modal)
+{
+    /*
+    Must receive the modal type name to be built in the server and returned.
+    Available modals types:
+    [
+        "purchase"      -> Returns a custom modal to add a purchase log
+        "coffee"        -> Returns a custom modal to configurate coffee parameters such as monthly price, date of charge
+        "user_payments" -> Returns a custom modal to modify user payments
+    ]
+
+    */
+    data = JSON.stringify({
+        type : modal
+    });
+
+    let response = await fetch("/API/get_modal", {
+        method : 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body : data});
+
+    modal = await response.json();
+
+    return modal;
+}
+
+async function OpenPurchaseModal()
+{
+    let modal = await API_GetModal("purchase");
+
+    $(modal["html"]).appendTo("body");
+    $("#PurchaseModal").modal("show");
+
+    $('#PurchaseModal').on('hidden.bs.modal', function (e) {
+        $("#PurchaseModal").remove();
+      })
+    
+    $( ".datepicker" ).datepicker({
+        dateFormat : "dd/mm/yy",
+        currentText: "Now"
+    });
+
+}
+
 // Edit payment modal to display payment information
-async function PaymentModalForUser(user_id) {
+async function PaymentModalForUser(user_id) 
+{
     // Get payment form elements
     let user = await API_GetUserById(user_id);
 
@@ -226,7 +272,7 @@ async function RemoveUserById(user_id)
     }
 }
 
-async function IncomeReportByMonth(month)
+async function IncomeReportByMonth()
 {
     let month_num = parseInt($("#cash-income-filter").val());
 
@@ -244,7 +290,7 @@ async function IncomeReportByMonth(month)
 
 }
 
-async function SpentReportByMonth(month)
+async function SpentReportByMonth()
 {
     let month_num = parseInt($("#cash-spent-filter").val());
 
@@ -262,7 +308,7 @@ async function SpentReportByMonth(month)
 
 }
 
-async function TotalCashReportByMonth(month)
+async function TotalCashReportByMonth()
 {
     let month_num = parseInt($("#cash-total-filter").val());
 
@@ -308,34 +354,20 @@ function update_payment_total()
     $("#pay-total").val("R$ " + (value - discount));
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', (event) => 
+{
     $("#btn-logout").click(
         function() {
             window.location.href='auth/logout';
         }
     );
-    
-    $("#btn-add-person").click(
-        function() {
-            EditModalForUser();
-        }
-    );
-    
-    $("#pay-value").change(
-        function() {
-            update_payment_total();
-        }
-    )
-
-    $("#pay-discount").change(
-        function() {
-            update_payment_total();
-        }
-    )
-
+    $("#btn-add-person").click(EditModalForUser);
+    $("#btn-purchase").click(OpenPurchaseModal);
+    $("#pay-value").change(update_payment_total);
+    $("#pay-discount").change(update_payment_total);
     $("#cash-income-filter").change(IncomeReportByMonth);
     $("#cash-spent-filter").change(SpentReportByMonth);
     // Add event listeners
     row_buttons_events();
 
-  });
+});

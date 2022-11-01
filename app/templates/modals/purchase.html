@@ -1,0 +1,48 @@
+<div class="modal fade" id="PurchaseModal" tabindex="-1" aria-labelledby="PurchaseModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="PurchaseModal-title">PURCHASE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="">
+                <!-- Purchase person name -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    </div>
+                    <select class="custom-select" required>
+                        <option selected>Select</option>
+                        {% for person in people %}
+                        <option value="{{person.id}}">{{person.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Purchase value -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Value</span>
+                    </div>
+                    <input class="form-control" type="number" name="purchase-value" id="purchase-value" value="0" required>
+                </div>
+
+                <!-- Purchase date -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
+                    </div>
+                    <input class="form-control datepicker" type="text" name="purchase-date" id="purchase-date" min="2020-02-20" required>
+                </div>
+
+                <div class="input-group mb-3 d-flex justify-content-around">
+                    <button class="btn btn-primary" type="submit">Salvar</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

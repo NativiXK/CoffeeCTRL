@@ -21,9 +21,9 @@
         <h2 id="header-title-text">Coffee manager</h2>
     </div>
 
-    <div class="header-tools">
-        <button class="btn btn-success" id="btn-add-person">Add user</button>
-        <button class="btn btn-warning" id="btn-shop">Shop</button>
+    <div class="btn-group header-tools" role="group">
+        <button class="btn btn-success" id="btn-add-person"><strong>+</strong> User</button>
+        <button class="btn btn-warning" id="btn-purchase"><strong>+</strong> Purchase</button>
     </div>
     
     <button class="btn btn-secondary" id="btn-logout">Logout</button>
@@ -46,7 +46,7 @@
             <input type="text" value="{{'R$%.2f' | format(coffee_price)}}" readonly>
             <button class="btn btn-secondary">
                 Edit
-                <svg xmlns="http://www.w3.org/2000/svg" width=20" height="20" fill="white" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-gear-fill" viewBox="0 0 16 16">
                     <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
                 </svg>
             </button>
@@ -219,13 +219,13 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
                     </div>
-                    <input class="form-control" type="text" name="pay-date" id="pay-date" min="2020-02-20" required>
+                    <input class="form-control datepicker" type="text" name="pay-date" id="pay-date" min="2020-02-20" required>
                 </div>
 
                 <!-- Payment value -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Payment</span>
+                        <span class="input-group-text" id="inputGroup-sizing-default">Value</span>
                     </div>
                     <input class="form-control" type="number" min="0" name="pay-value" id="pay-value" value="0" required>
                 </div>
@@ -249,7 +249,7 @@
                 <!-- Payment confirmation or closure -->
                 <div class="input-group mb-3 d-flex justify-content-around">
                     <input class="btn btn-success m-2 mb-2" id="pay-confirm" type="button" value="Confirm">
-                    <input class="btn btn-danger m-2 mb-2" type="button" value="Cancel" data-dismiss="modal" aria-label="Close">
+                    <input class="btn btn-danger m-2 mb-2" type="reset" value="Cancel" data-dismiss="modal" aria-label="Close">
                 </div>
             </form>
         </div>

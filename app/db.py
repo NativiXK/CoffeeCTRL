@@ -65,6 +65,15 @@ def get_cash_spent(month = 13): # 13 means yearly filter
 
     return int(spent) if spent else 0
 
+def get_people():
+
+    db = get_db()
+    query = f"SELECT id, name FROM person"
+    print(query)
+    people = db.execute(query).fetchall()
+
+    return people
+
 @click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables."""

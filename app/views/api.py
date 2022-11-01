@@ -119,6 +119,23 @@ def API_cash_report():
 
     return jsonify({"html" : render_template("modals/report.html", report_type = report_type, title = (report_type.upper() + " CASH REPORT"), month = month_name, cash = cash, logs = logs)})
 
+@bp.route("/get_modal", methods=["POST"])
+def API_get_modal():
+    modals_available = [
+        "purchase",
+        "coffee",
+        "user_payments"
+    ]
+
+    modal_type = request.get_json()["type"]
+
+    if modal_type in modals_available:
+
+        return jsonify({"html" : render_template(f"modals/{modal_type}.html", people = db.get_people())})
+    
+    else:
+        return '0', 400
+
 # Insert purchase
 # 1 first insert items
 # INSERT INTO items (coffee_amount, coffee_value, sugar_amount, sugar_value, crackers_amount, crackers_value) VALUES (?, ?, ?, ?, ?, ?)
