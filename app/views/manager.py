@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, session, redirect
 from app import db
 from app.views.auth import login_required
 
@@ -6,6 +6,9 @@ bp = Blueprint("manager", __name__, url_prefix="/")
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
+    if session:
+        return redirect("/edit")
+
     if request.method == "POST":
         name = request.form.get("name").strip()
 

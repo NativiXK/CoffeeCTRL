@@ -8,13 +8,13 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="">
+            <form action="/API/add_user_purchase" method="post">
                 <!-- Purchase person name -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     </div>
-                    <select class="custom-select" required>
+                    <select class="custom-select" name="user_id" id="user_id" required>
                         <option selected>Select</option>
                         {% for person in people %}
                         <option value="{{person.id}}">{{person.name}}</option>

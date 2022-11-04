@@ -1,5 +1,6 @@
-from flask import jsonify, render_template, request, Blueprint, flash
+from flask import jsonify, render_template, request, Blueprint, flash, redirect
 from app import db
+from app.views import modals
 import calendar
 
 bp = Blueprint('API', __name__, url_prefix='/API')
@@ -67,6 +68,11 @@ def API_add_user_payment():
 
     return "1", 200
 
+@bp.route("/add_user_purchase", methods=["POST"])
+def API_add_user_purchase():
+    print(request.form)
+    return redirect("/")
+
 @bp.route("/remove_user_by_id", methods=["POST"])
 def API_remove_user_by_id():
     user_id = request.get_json()["user_id"]
@@ -121,17 +127,20 @@ def API_cash_report():
 
 @bp.route("/get_modal", methods=["POST"])
 def API_get_modal():
-    modals_available = [
-        "purchase",
-        "coffee",
-        "user_payments"
-    ]
+    modals_available = {
+        "purchase"      : modals.render_purchase,
+        "coffee"        : modals.render_coffee, 
+        "user-payments" : modals.render_user_payments
+    }
+    json = request.get_json()
 
-    modal_type = request.get_json()["type"]
+    modal_type = json["type"]
+    parameters = json["parameters"] if "parameters" in json.keys() else None
 
     if modal_type in modals_available:
+        modal_html = modals_available[modal_type](parameters) if parameters else modals_available[modal_type]()
 
-        return jsonify({"html" : render_template(f"modals/{modal_type}.html", people = db.get_people())})
+        return jsonify({"html" : modal_html})
     
     else:
         return '0', 400

@@ -43,8 +43,8 @@ INSERT INTO user (username, password) VALUES
 INSERT INTO person (name, email) VALUES
     ("Alan Vitor Gomes", "alanvg@weg.net"),
     ("Alexandre Endler", "aendler@weg.net"),
-    ("Anderson Montiel Rodrigues", "andersonlj@weg.net"),
-    ("Anderson Luis Hanemann Junior", "montiel@weg.net"),
+    ("Anderson Montiel Rodrigues", "montiel@weg.net"),
+    ("Anderson Luis Hanemann Junior", "andersonlj@weg.net"),
     ("Bruno Eduardo Esteves de Lima", "brunoeduardo@weg.net"),
     ("Cristiano Deoracki", "deoracki@weg.net"),
     ("Daniel Mayer Faria", "faria@weg.net"),

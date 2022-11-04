@@ -65,6 +65,14 @@ def get_cash_spent(month = 13): # 13 means yearly filter
 
     return int(spent) if spent else 0
 
+def get_person_by_id(user_id):
+    db = get_db()
+    query = f"SELECT id, name FROM person WHERE id == {user_id}"
+    print(query)
+    person = db.execute(query).fetchone()
+
+    return person
+
 def get_people():
 
     db = get_db()

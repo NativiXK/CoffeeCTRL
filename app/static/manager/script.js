@@ -121,7 +121,7 @@ async function API_GetReport(type, month)
     return report;
 }
 
-async function API_GetModal(modal)
+async function API_GetModal(modal, parameters)
 {
     /*
     Must receive the modal type name to be built in the server and returned.
@@ -134,7 +134,8 @@ async function API_GetModal(modal)
 
     */
     data = JSON.stringify({
-        type : modal
+        type : modal,
+        parameters : parameters
     });
 
     let response = await fetch("/API/get_modal", {
@@ -143,7 +144,7 @@ async function API_GetModal(modal)
         body : data});
 
     modal = await response.json();
-
+    console.log(modal);
     return modal;
 }
 
@@ -163,6 +164,19 @@ async function OpenPurchaseModal()
         currentText: "Now"
     });
 
+}
+
+async function PaymentsModalForUser(user_id)
+{
+    let modal = await API_GetModal("user-payments", {user_id : user_id});
+
+    $(modal["html"]).appendTo("body");
+    $("#UserPaymentsModal").modal("show");
+
+    $('#UserPaymentsModal').on('hidden.bs.modal', function (e) {
+        $("#UserPaymentsModal").remove();
+      })
+      
 }
 
 // Edit payment modal to display payment information
@@ -335,11 +349,13 @@ function row_buttons_events()
         let user_id = rows_id[index].innerHTML.trim();
         
         var ShowPayModal_Event = function(){ PaymentModalForUser(user_id) };
+        var ShowPaymentsModal_Event = function(){ PaymentsModalForUser(user_id)}
         var ShowEditModal_Event = function(){ EditModalForUser(user_id) };
         var RemoveUser = function() { RemoveUserById(user_id) };
 
         //Add event for each button in rows
         $("#pay-" + user_id).click(ShowPayModal_Event.bind(user_id));
+        $("#payments-" + user_id).click(ShowPaymentsModal_Event.bind(user_id));
         $("#edit-" + user_id).click(ShowEditModal_Event.bind(user_id));
         $("#remove-" + user_id).click(RemoveUser.bind(user_id));
 
