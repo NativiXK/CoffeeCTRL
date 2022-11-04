@@ -70,7 +70,14 @@ def API_add_user_payment():
 
 @bp.route("/add_user_purchase", methods=["POST"])
 def API_add_user_purchase():
-    print(request.form)
+    # ('user_id', '1'), ('purchase-value', '15'), ('purchase-date', '02/11/2022'), ('purchase-description', 'cafe')
+    purchase = dict(request.form)
+    
+    if db.add_purchase(purchase):
+        flash("Purchase registered!", "message")
+    else:
+        flash("Purchase was not registered!", "error")
+
     return redirect("/")
 
 @bp.route("/remove_user_by_id", methods=["POST"])

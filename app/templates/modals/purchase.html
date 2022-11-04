@@ -14,7 +14,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
                     </div>
-                    <select class="custom-select" name="user_id" id="user_id" required>
+                    <select class="custom-select" name="purchase-user_id" id="purchase-user_id" required>
                         <option selected>Select</option>
                         {% for person in people %}
                         <option value="{{person.id}}">{{person.name}}</option>
@@ -35,11 +35,16 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
                     </div>
-                    <input class="form-control datepicker" type="text" name="purchase-date" id="purchase-date" min="2020-02-20" required>
+                    <input class="form-control datepicker" type="text" name="purchase-date" id="purchase-date" min="2020-02-20" readonly required>
                 </div>
 
+                <div class="input-group w-100">
+                    <span class="input-group-text w-100" id="inputGroup-sizing-default">Description</span>
+                </div>
+                    <input class="form-control mb-3" style="height: 4rem" name="purchase-description" id="purchase-description" type="text">
+
                 <div class="input-group mb-3 d-flex justify-content-around">
-                    <button class="btn btn-primary" type="submit">Salvar</button>
+                    <input class="btn btn-primary w-25" type="submit" value="Save">
                 </div>
             </form>
         </div>

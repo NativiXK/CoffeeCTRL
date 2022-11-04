@@ -157,7 +157,7 @@
                             <strong>Email: </strong> {{ user.email }}
                         </div>
                         <div class="ml-4">
-                            <strong>Area: </strong> {{ user.area }}
+                            <strong>Area: </strong> {% if user.area %} {{ user.area }} {% endif %}
                         </div>
                     </div>
                 </td>
@@ -219,7 +219,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
                     </div>
-                    <input class="form-control datepicker" type="text" name="pay-date" id="pay-date" min="2020-02-20" required>
+                    <input class="form-control datepicker" type="text" name="pay-date" id="pay-date" min="2020-02-20" readonly required>
                 </div>
 
                 <!-- Payment value -->

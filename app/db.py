@@ -47,7 +47,7 @@ def get_user_payments(name : str = "") -> dict:
             
     return people
 
-def get_income(month = 13): # 13 means yearly filter
+def get_income(month : int = 13): # 13 means yearly filter
 
     db = get_db()
     query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
@@ -56,7 +56,7 @@ def get_income(month = 13): # 13 means yearly filter
 
     return int(income) if income else 0
 
-def get_cash_spent(month = 13): # 13 means yearly filter
+def get_cash_spent(month : int = 13): # 13 means yearly filter
     
     db = get_db()
     query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
@@ -65,7 +65,7 @@ def get_cash_spent(month = 13): # 13 means yearly filter
 
     return int(spent) if spent else 0
 
-def get_person_by_id(user_id):
+def get_person_by_id(user_id : int):
     db = get_db()
     query = f"SELECT id, name FROM person WHERE id == {user_id}"
     print(query)
@@ -81,6 +81,20 @@ def get_people():
     people = db.execute(query).fetchall()
 
     return people
+
+def add_purchase(purchase : dict):
+    # Purchase dict must have the following keys
+    # user_id, value, date and description
+    purchase["purchase-date"] = '-'.join(purchase["purchase-date"].split('/')[::-1])
+    
+    db = get_db()
+    query = f"INSERT INTO purchase (date, value, description, person_id) VALUES ('{purchase['purchase-date']}', {purchase['purchase-value']}, '{purchase['purchase-description']}', {purchase['purchase-user_id']})"
+    print(query)
+    id = db.execute(query)
+    db.commit()
+    print(id)
+
+    return 1
 
 @click.command('init-db')
 def init_db_command():

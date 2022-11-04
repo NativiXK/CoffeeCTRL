@@ -14,12 +14,10 @@ $(function()
 // Toggle collapsable element by its id
 function toggle_collapse(id)
 {
-    if (last_collapse)
-    {
-        $('#'+last_collapse).collapse('hide');
-    }
 
-    $('#'+id).collapse('toggle');
+    $('#'+last_collapse).collapse('hide');
+
+    $('#'+id).collapse('show');
     last_collapse = id;
 }
 
@@ -377,7 +375,11 @@ document.addEventListener('DOMContentLoaded', (event) =>
             window.location.href='auth/logout';
         }
     );
-    $("#btn-add-person").click(EditModalForUser);
+    $("#btn-add-person").click(
+        function() {
+            EditModalForUser();
+        }
+    );
     $("#btn-purchase").click(OpenPurchaseModal);
     $("#pay-value").change(update_payment_total);
     $("#pay-discount").change(update_payment_total);
