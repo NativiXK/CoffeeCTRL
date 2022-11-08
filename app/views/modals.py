@@ -1,10 +1,10 @@
 from flask import render_template
 from app import db
 
-def render_purchase():
+def render_purchase() -> str:
     return render_template("modals/purchase.html", people = db.get_people())
 
-def render_coffee(parameters : dict) -> str:
+def render_coffee(parameters : dict) -> str: #to do
     pass
 
 def render_user_payments(parameters : dict) -> str:

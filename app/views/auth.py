@@ -1,11 +1,9 @@
 import functools
-
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from app.db import get_db, get_user_payments
+from app.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -51,7 +49,7 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    print(request.method)
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -75,7 +73,7 @@ def login():
 
         flash(error, 'error')
 
-    return redirect(url_for('index'))
+    return render_template("auth/login.html")
 
 @bp.before_app_request
 def load_logged_in_user():

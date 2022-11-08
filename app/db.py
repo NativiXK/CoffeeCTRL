@@ -1,5 +1,4 @@
 import sqlite3
-
 import click
 from flask import current_app, g
 
@@ -29,9 +28,30 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def is_month_paid(date : str, user_id : int):
+
+    db = get_db()
+    # Check if there is a payment on the month strftime('%m', payment.date)
+    query = f"SELECT * FROM payment WHERE strftime('%m', payment.date) == strftime('%m', '{date}') AND payment.person_id == {user_id}"
+    print(query)
+    pays = db.execute(query).fetchall()
+
+    return True if pays else False
+
+def add_payment(payment : dict):
+    
+    db = get_db()
+    query = f"INSERT INTO payment (date, value, discount, person_id) VALUES (\"{payment['date']}\", {payment['value']}, {payment['discount']}, {payment['user_id']})"
+    print(query)
+    db.execute(query)
+    db.commit()
+
+    return 1
+
 def get_user_payments(name : str = "") -> dict:
     db = get_db()
     query = "SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
+    print(query)
     people = db.execute(query).fetchall()
 
     for person in people:
@@ -82,6 +102,28 @@ def get_people():
 
     return people
 
+def add_new_user(user_data : dict):
+    db = get_db()
+    query = f"INSERT INTO person (name, email, area) VALUES (\"{user_data['name']}\", \"{user_data['email']}\", \"{user_data['area']}\")"
+    print(query)
+    db.execute(query)
+    db.commit()
+
+    return 1
+
+def remove_person_by_id(user_id : int):
+
+    db = get_db()
+    query = f"DELETE FROM payment WHERE person_id == {user_id}"
+    print(query)
+    db.execute(query)
+    query = f"DELETE FROM person WHERE id == {user_id}"
+    print(query)
+    db.execute(query)
+    db.commit()
+
+    return 1
+
 def add_purchase(purchase : dict):
     # Purchase dict must have the following keys
     # user_id, value, date and description
@@ -90,11 +132,14 @@ def add_purchase(purchase : dict):
     db = get_db()
     query = f"INSERT INTO purchase (date, value, description, person_id) VALUES ('{purchase['purchase-date']}', {purchase['purchase-value']}, '{purchase['purchase-description']}', {purchase['purchase-user_id']})"
     print(query)
-    id = db.execute(query)
+    id = db.execute(query).fetchall()
     db.commit()
     print(id)
 
     return 1
+
+def get_coffee_price(): #to do
+    pass
 
 @click.command('init-db')
 def init_db_command():

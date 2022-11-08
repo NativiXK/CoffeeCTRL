@@ -1,6 +1,6 @@
 from flask import jsonify, render_template, request, Blueprint, flash, redirect
 from app import db
-from app.views import modals
+from app.views import modals, auth
 import calendar
 
 bp = Blueprint('API', __name__, url_prefix='/API')
@@ -33,12 +33,9 @@ def API_edit_user():
 
 @bp.route("/add_new_user", methods=["POST"])
 def API_add_new_user():
-    user = request.get_json()
+    user_data = request.get_json()
 
-    cursor = db.get_db()
-    query = f"INSERT INTO person (name, email, area) VALUES (\"{user['name']}\", \"{user['email']}\", \"{user['area']}\")"
-    cursor.execute(query)
-    cursor.commit()
+    db.add_new_user(user_data)
 
     return "1", 200
 
@@ -50,21 +47,12 @@ def API_add_user_payment():
 
     payment["date"] = '-'.join(payment["date"].split('/')[::-1])
 
-    cursor = db.get_db()
-    # Check if there is a payment on the month strftime('%m', payment.date)
-    query = f"SELECT * FROM payment WHERE (strftime('%m', payment.date) + 1) == strftime('%m', '{payment['date']}') AND payment.person_id == {payment['user_id']}"
-    print(query)
-    pays = cursor.execute(query).fetchall()
-
-    if pays:
-        print(pays)
+    if db.is_month_paid(payment["date"], payment["user_id"]):
         flash("PAYMENT NOT REGISTERED! There is already a payment for the given month", "error")
         return "0", 400
 
-    query = f"INSERT INTO payment (date, value, discount, person_id) VALUES (\"{payment['date']}\", {payment['value']}, {payment['discount']}, {payment['user_id']})"
-    print(query)
-    cursor.execute(query)
-    cursor.commit()
+    db.add_payment(payment)
+    flash(f"R${ (float(payment['value']) - float(payment['discount'])) } PAYMENT REGISTERED! ", "message")
 
     return "1", 200
 
@@ -81,16 +69,10 @@ def API_add_user_purchase():
     return redirect("/")
 
 @bp.route("/remove_user_by_id", methods=["POST"])
+@auth.login_required
 def API_remove_user_by_id():
-    user_id = request.get_json()["user_id"]
-
-    cursor = db.get_db()
-    query = f"DELETE FROM payment WHERE person_id == {user_id}"
-    cursor.execute(query)
-    query = f"DELETE FROM person WHERE id == {user_id}"
-    cursor.execute(query)
-    cursor.commit()
-
+    user_id = int(request.get_json()["user_id"])
+    db.remove_person_by_id(user_id)
     return "1", 200
 
 @bp.route("/cash_report", methods=["POST"])
@@ -135,9 +117,9 @@ def API_cash_report():
 @bp.route("/get_modal", methods=["POST"])
 def API_get_modal():
     modals_available = {
-        "purchase"      : modals.render_purchase,
-        "coffee"        : modals.render_coffee, 
-        "user-payments" : modals.render_user_payments
+        "purchase"      : modals.render_purchase, # Render new purchase modal
+        "coffee"        : modals.render_coffee, # Renders coffee settings modal
+        "user-payments" : modals.render_user_payments # Render user payments list modal
     }
     json = request.get_json()
 
@@ -151,9 +133,3 @@ def API_get_modal():
     
     else:
         return '0', 400
-
-# Insert purchase
-# 1 first insert items
-# INSERT INTO items (coffee_amount, coffee_value, sugar_amount, sugar_value, crackers_amount, crackers_value) VALUES (?, ?, ?, ?, ?, ?)
-# 2 second insert purchase with items id
-# INSERT INTO purchase (date, value, description, items_id, person_id) VALUES (?, ?, ?, ?, ?)
