@@ -13,9 +13,9 @@ def index():
         name = request.form.get("name").strip()
 
         if name:
-            return render_template("manager/index.html", users = db.get_user_payments(name))
+            return render_template("manager/index.html", users = db.get_user_payments_by_name(name))
      
-    return render_template("manager/index.html", users = db.get_user_payments())
+    return render_template("manager/index.html", users = db.get_user_payments_by_name())
 
 @bp.route("/edit", methods=["GET", "POST"])
 @login_required
@@ -24,8 +24,8 @@ def edit_payments():
         name = request.form.get("name").strip()
 
         if name:
-            return render_template("manager/edit.html", users = db.get_user_payments(name), filter = True)
+            return render_template("manager/edit.html", users = db.get_user_payments_by_name(name), filter = True)
     
     income = db.get_income()
     spent = db.get_cash_spent()
-    return render_template("manager/edit.html", users = db.get_user_payments(), coffee_price = 15.0,income = income, spent = spent)
+    return render_template("manager/edit.html", users = db.get_user_payments_by_name(), coffee_price = 15.0,income = income, spent = spent)

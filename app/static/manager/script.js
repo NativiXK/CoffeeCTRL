@@ -174,7 +174,10 @@ async function PaymentsModalForUser(user_id)
     $('#UserPaymentsModal').on('hidden.bs.modal', function (e) {
         $("#UserPaymentsModal").remove();
       })
-      
+    
+    $( ".datepicker" ).datepicker({
+        dateFormat : "dd/mm/yy"
+    });
 }
 
 // Edit payment modal to display payment information

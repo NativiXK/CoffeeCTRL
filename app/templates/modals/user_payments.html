@@ -9,6 +9,66 @@
         </div>
         <div class="modal-body">
             
+          <div class="accordion" id="accordionExample">
+            {% for pay in payments %}
+            <div class="card">
+              
+              <div class="card-header p-1 d-flex" id="headingOne">
+                <h2 class="mb-0 text-dark flex-fill">
+                  <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-{{pay.id}}" aria-expanded="false" aria-controls="collapse-{{pay.id}}">
+                    <strong>{{pay.date}}</strong> {{ 'R$%.2f' | format(pay.value) }}
+                  </button>
+                </h2>
+                <form action="/API/remove_payment" method="post">
+                  <input type="hidden" name="payment-id" value="{{pay.id}}">
+                  <button class="btn btn-danger" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+          
+              <div id="collapse-{{pay.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#collapse-{{pay.id}}">
+                <div class="card-body text-center">
+                  <form action="/API/update_payment" method="post" id="UserPaymentsForm-{{pay.id}}">
+                    
+                    <!-- Payment date -->
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">Date</span>
+                      </div>
+                      <input class="form-control datepicker" type="text" name="payment-date" id="payment-date" min="2020-02-20" value="{{pay.date}}" readonly required>
+                    </div>
+
+                   <!-- Payment value -->
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">Value R$</span>
+                      </div>
+                      <input class="form-control" type="number" name="payment-value" id="payment-value" value="{{pay.value}}" required>
+                    </div>
+
+                    <!-- Payment discount -->
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">Discount R$</span>
+                      </div>
+                      <input class="form-control" type="number" name="payment-discount" id="payment-discount" value="{{pay.discount}}" required>
+                    </div>
+                    <!-- onclick="SaveUserPayment('UserPaymentsForm-{{pay.id}}')" -->
+                    
+                    <div class="input-group mb-0 d-flex justify-content-around">
+                      <input class="btn btn-primary w-25" type="submit" value="Save">
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

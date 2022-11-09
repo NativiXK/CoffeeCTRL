@@ -11,4 +11,6 @@ def render_user_payments(parameters : dict) -> str:
 
     user_id = int(parameters["user_id"])
     user = db.get_person_by_id(user_id)
-    return render_template("modals/user_payments.html", user_id = user_id, user = user)
+    payments = db.get_user_payments_by_id(user_id)
+    print(payments)
+    return render_template("modals/user_payments.html", user_id = user_id, user = user, payments = payments)

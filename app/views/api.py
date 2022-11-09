@@ -9,7 +9,7 @@ bp = Blueprint('API', __name__, url_prefix='/API')
 @bp.route("/get_user_payments/<name>", methods=["GET"]) # Apply a filter to find any name that contains 'name'
 @bp.route("/get_user_payments/", methods=["GET"])
 def API_get_user_payments(name : str = ""):
-    return db.get_user_payments(name)
+    return db.get_user_payments_by_name(name)
 
 @bp.route("/get_user_by_id", methods=["POST"])
 def API_get_user_by_id():
@@ -55,6 +55,20 @@ def API_add_user_payment():
     flash(f"R${ (float(payment['value']) - float(payment['discount'])) } PAYMENT REGISTERED! ", "message")
 
     return "1", 200
+
+@bp.route("/update_payment", methods=["POST"])
+def API_update_payment():
+    payment = dict(request.form)
+    print(payment)
+
+    return redirect("/")
+
+@bp.route("remove_payment", methods=["POST"])
+def API_remove_payment():
+    pay_id = request.form.get("payment-id")
+    print(pay_id)
+
+    return redirect("/")
 
 @bp.route("/add_user_purchase", methods=["POST"])
 def API_add_user_purchase():

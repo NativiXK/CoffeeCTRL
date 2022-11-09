@@ -48,7 +48,7 @@ def add_payment(payment : dict):
 
     return 1
 
-def get_user_payments(name : str = "") -> dict:
+def get_user_payments_by_name(name : str = "") -> dict:
     db = get_db()
     query = "SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
     print(query)
@@ -66,6 +66,18 @@ def get_user_payments(name : str = "") -> dict:
             person["months"][int(pay["month"]) - 1] = pay
             
     return people
+
+def get_user_payments_by_id(user_id : int = None) -> dict:
+    db = get_db()
+
+    query = f"SELECT payment.id as id, payment.date as date, payment.value, payment.discount FROM person, payment WHERE person.id == payment.person_id and person.id = {user_id} ORDER BY date"
+    print(query)
+    user_payments = db.execute(query).fetchall()
+
+    for pay in user_payments:
+        pay["date"] = '/'.join(str(pay["date"]).split('-')[::-1])
+
+    return user_payments
 
 def get_income(month : int = 13): # 13 means yearly filter
 
