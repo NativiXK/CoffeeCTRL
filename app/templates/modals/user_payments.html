@@ -21,7 +21,7 @@
                 </h2>
                 <form action="/API/remove_payment" method="post">
                   <input type="hidden" name="payment-id" value="{{pay.id}}">
-                  <button class="btn btn-danger" type="submit">
+                  <button class="btn btn-danger" type="submit" onClick='return confirmSubmit()'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-trash-fill" viewBox="0 0 16 16">
                       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                     </svg>
@@ -32,7 +32,7 @@
               <div id="collapse-{{pay.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#collapse-{{pay.id}}">
                 <div class="card-body text-center">
                   <form action="/API/update_payment" method="post" id="UserPaymentsForm-{{pay.id}}">
-                    
+                    <input type="hidden" name="payment-id" value="{{pay.id}}">
                     <!-- Payment date -->
                     <div class="input-group mb-2">
                       <div class="input-group-prepend">
@@ -59,7 +59,7 @@
                     <!-- onclick="SaveUserPayment('UserPaymentsForm-{{pay.id}}')" -->
                     
                     <div class="input-group mb-0 d-flex justify-content-around">
-                      <input class="btn btn-primary w-25" type="submit" value="Save">
+                      <input class="btn btn-primary w-25" type="submit" value="Save" onClick='return confirmSubmit()'>
                     </div>
                   </form>
 

@@ -48,6 +48,25 @@ def add_payment(payment : dict):
 
     return 1
 
+def remove_payment_by_id(id):
+
+    db = get_db()
+    query = f"DELETE FROM payment WHERE id == {id}"
+    print(query)
+    db.execute(query)
+    db.commit()
+    return 1
+
+def update_payment(payment):
+    db = get_db()
+    print(payment)
+    query = f"UPDATE payment SET date = '{payment['payment-date']}', value = {payment['payment-value']}, discount = {payment['payment-discount']} WHERE id == {payment['payment-id']}"
+    print(query)
+    db.execute(query)
+    db.commit()
+
+    return 1
+
 def get_user_payments_by_name(name : str = "") -> dict:
     db = get_db()
     query = "SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
@@ -55,7 +74,7 @@ def get_user_payments_by_name(name : str = "") -> dict:
     people = db.execute(query).fetchall()
 
     for person in people:
-        query = f"SELECT strftime('%m', payment.date) as month, payment.value, payment.discount FROM person, payment WHERE person.id == payment.person_id and person.id = {person['id']} ORDER BY Month"
+        query = f"SELECT strftime('%m', payment.date) as month, payment.value, payment.discount FROM person, payment WHERE person.id == payment.person_id and person.id == {person['id']} ORDER BY Month"
         pays = db.execute(query).fetchall()
         person["months"] = [
             {"month" : i, 
@@ -66,6 +85,20 @@ def get_user_payments_by_name(name : str = "") -> dict:
             person["months"][int(pay["month"]) - 1] = pay
             
     return people
+
+def get_groups_by_name(name):
+    db = get_db()
+    query = f"SELECT id, username, group_name FROM admin WHERE UPPER(group_name) LIKE '%{name.upper()}%'"
+    print(query)
+    groups = db.execute(query).fetchall()
+
+    for group in groups:
+        query = f"SELECT COUNT(*) as people FROM person WHERE admin_id == {group['id']}"
+        
+        people = db.execute(query).fetchone()["people"]
+        group["people"] = people
+
+    return groups
 
 def get_user_payments_by_id(user_id : int = None) -> dict:
     db = get_db()
@@ -99,7 +132,7 @@ def get_cash_spent(month : int = 13): # 13 means yearly filter
 
 def get_person_by_id(user_id : int):
     db = get_db()
-    query = f"SELECT id, name FROM person WHERE id == {user_id}"
+    query = f"SELECT * FROM person WHERE id == {user_id}"
     print(query)
     person = db.execute(query).fetchone()
 
@@ -122,6 +155,13 @@ def add_new_user(user_data : dict):
     db.commit()
 
     return 1
+
+def edit_user(user : dict):
+
+    cursor = get_db()
+    query = f"UPDATE person SET name = \"{user['name']}\", email = \"{user['email']}\", area = \"{user['area']}\" WHERE id = {user['id']}"
+    cursor.execute(query)
+    cursor.commit()
 
 def remove_person_by_id(user_id : int):
 

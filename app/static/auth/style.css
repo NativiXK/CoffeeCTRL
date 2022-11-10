@@ -1,84 +1,15 @@
-div#coffee-table
-{   
-    margin: 1% 2% 0 2%;
-    padding: 5px;
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
 }
-
-#col_name
-{
-    min-width: 175px;
+.h-custom {
+height: calc(100% - 200px);
 }
-
-#coffee-table td
-{
-    vertical-align: middle;
-    max-height: min-content;
-    max-width: min-content;
-    padding: 2px;
+@media (max-width: 450px) {
+.h-custom {
+height: 75%;
 }
-
-#coffee-table tr:hover
-{
-    background-color: lightskyblue;
-}
-
-.header-title
-{
-    display: inline-flex;
-    height: auto;
-    max-width: fit-content;
-}
-
-#header-img
-{
-    display: contents;
-    height: auto;
-    width: 150px;
-    margin: auto;
-}
-
-#header-img svg
-{
-    object-fit: scale-down;
-    max-height: 100%;
-}
-
-#header-title-text
-{
-    margin: auto 0;
-    margin-left: 20px;
-}
-
-#header-filter
-{
-    display: block;
-    justify-content: space-around;
-    align-items: center;
-    min-width: fit-content;
-}
-
-#filter-title
-{
-    top: 0;
-}
-
-header
-{
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 20px;
-    height: 5%;
-    max-height: 150px;
-    background-color: lightgray;
-}
-
-form input[type=submit]
-{
-    border-radius: 3px;
-    border: 2px lightgray;
-    background-color: lightskyblue;
-    font-weight: 500;
-    padding: 5px 10px;
 }

@@ -14,7 +14,7 @@ def API_get_user_payments(name : str = ""):
 @bp.route("/get_user_by_id", methods=["POST"])
 def API_get_user_by_id():
     id = int(request.get_json()["id"])
-    user = db.get_db().execute(f"SELECT * FROM person WHERE id={id}").fetchone()
+    user = db.get_person_by_id(id)
 
     return jsonify(user)
 
@@ -22,11 +22,7 @@ def API_get_user_by_id():
 @bp.route("/edit_user", methods=["POST"])
 def API_edit_user():
     user = request.get_json()
-
-    cursor = db.get_db()
-    query = f"UPDATE person SET name = \"{user['name']}\", email = \"{user['email']}\", area = \"{user['area']}\" WHERE id = {user['id']}"
-    cursor.execute(query)
-    cursor.commit()
+    db.edit_user(user)
 
     flash (f"User {user['name']} edited", "message")
     return "1", 200
@@ -59,15 +55,18 @@ def API_add_user_payment():
 @bp.route("/update_payment", methods=["POST"])
 def API_update_payment():
     payment = dict(request.form)
-    print(payment)
+    payment["payment-date"] = '-'.join(payment["payment-date"].split('/')[::-1])
 
+    db.update_payment(payment)
+    flash("Payment updated!", "message")
     return redirect("/")
 
 @bp.route("remove_payment", methods=["POST"])
 def API_remove_payment():
     pay_id = request.form.get("payment-id")
-    print(pay_id)
+    db.remove_payment_by_id(pay_id)
 
+    flash("Payment deleted!", "message")
     return redirect("/")
 
 @bp.route("/add_user_purchase", methods=["POST"])

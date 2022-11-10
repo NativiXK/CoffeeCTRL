@@ -7,15 +7,17 @@ bp = Blueprint("manager", __name__, url_prefix="/")
 @bp.route("/", methods=["GET", "POST"])
 def index():
     if session:
+        print(session)
         return redirect("/edit")
 
     if request.method == "POST":
-        name = request.form.get("name").strip()
-
+        name = request.form.get("group-name").strip()
+        groups = db.get_groups_by_name(name)
+        print(groups)
         if name:
-            return render_template("manager/index.html", users = db.get_user_payments_by_name(name))
+            return render_template("manager/index.html", groups = groups)
      
-    return render_template("manager/index.html", users = db.get_user_payments_by_name())
+    return render_template("manager/index.html")
 
 @bp.route("/edit", methods=["GET", "POST"])
 @login_required

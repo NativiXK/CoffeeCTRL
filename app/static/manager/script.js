@@ -31,6 +31,15 @@ function toMonthName(monthNumber)
         });
     }
 
+function confirmSubmit()
+{
+    var agree=confirm("Are you sure you wish to continue?");
+    if (agree)
+        return true ;
+    else
+        return false ;
+}
+
 async function API_UserPaymentCommit(user_data) 
 {
     let response = await

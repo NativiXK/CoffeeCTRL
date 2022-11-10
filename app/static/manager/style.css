@@ -109,6 +109,7 @@ div#cash-box
     height: auto;
     max-width: fit-content;
     min-width: fit-content;
+    cursor: pointer;
 }
 
 #header-img
@@ -152,7 +153,8 @@ div#cash-box
 
 #btn-login
 {
-    width: max-content;
+    width: 8rem;
+    min-width: fit-content;
     margin-left: auto;
 }
 
@@ -183,7 +185,7 @@ header
     height: 5%;
     max-height: 150px;
     background-color: lavender;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #007bff;
 }
 
 element {
