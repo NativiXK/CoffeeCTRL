@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS admin (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    group_name TEXT
+    email TEXT,
+    group_name TEXT UNIQUE,
+    monthly_price REAL
 );
 
 -- Create table person

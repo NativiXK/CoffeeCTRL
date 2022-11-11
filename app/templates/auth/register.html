@@ -4,15 +4,20 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='auth/style.css') }}">
 {% endblock %}
 
-{% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
-{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
 <section class="my-5 vh-75">
   <div class="container-fluid h-50">
-  
+    <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <div class="col-md-9 col-lg-6 col-xl-5 mb-5 text-center">
+        <img src="https://www.seekpng.com/png/full/6-66898_coffee-mug-top-png-pic-coffee-cup-top.png"
+          class="img-fluid w-50 m-5" alt="Filled Coffee mug image">
+      </div>
+
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <h4>Register</h4>
         <form action="" method="post">
 
           <!-- username input -->
@@ -21,34 +26,42 @@
               placeholder="Enter username" autofocus required/>
           </div>
 
-          <!-- Email input
+          <!-- Email input -->
           <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Enter email address" autofocus required/>
-          </div> -->
+            <input type="email" name="email" id="email" class="form-control form-control-lg"
+              placeholder="Enter email address" required/>
+          </div>
 
           <!-- Password input -->
-          <div class="form-outline mb-3">
+          <div class="form-outline mb-4">
             <input type="password" name="password" id="password" class="form-control form-control-lg"
               placeholder="Enter password" required/>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="/auth/forgot-password" class="text-body">Forgot password?</a>
+          <!-- Password confirmation -->
+          <div class="form-outline mb-4">
+            <input type="password" name="password-repeat" id="password-repeat" class="form-control form-control-lg"
+              placeholder="Repeat password" required/>
           </div>
-          
+
+          <!-- Group name -->
+          <div class="form-outline mb-4">
+            <h5>Group name:</h5>
+            <input type="text" name="group-name" id="group-name" class="form-control form-control-lg"
+              placeholder="Insert a group name" required/>
+          </div>
+
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-primary btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/auth/register"
-                class="link-danger">Register</a></p>
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+            
           </div>
 
         </form>
 
+        </div>
       </div>
     </div>
   </div>
-
 </section>
 {% endblock %}

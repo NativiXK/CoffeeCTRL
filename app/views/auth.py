@@ -20,25 +20,35 @@ def login_required(view):
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
+        print(request.form)
         username = request.form['username']
         password = request.form['password']
+        password_repeat = request.form['password-repeat']
+        email = request.form['email']
+        group_name = request.form['group-name']
+
         db = get_db()
         error = None
 
         if not username:
             error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
+        elif not password or not password_repeat:
+            error = f"Password {'confirmation ' if not password_repeat else ''}is required."
+        elif password != password_repeat:
+            error = "Passwords must be equal."
+        elif not email:
+            error = "Email is required."
+        elif not group_name:
+            error = "Group name is required."
 
         if error is None:
             try:
-                db.execute(
-                    "INSERT INTO user (username, password) VALUES (?, ?)",
-                    (username, generate_password_hash(password)),
-                )
+                query = f"INSERT INTO admin (username, password, email, group_name) VALUES ('{username}', '{generate_password_hash(password)}', '{email}', '{group_name}')"
+                print(query)
+                db.execute(query)
                 db.commit()
-            except db.IntegrityError:
-                error = f"User {username} is already registered."
+            except db.IntegrityError as e:
+                error = f"User {username} is already registered. ERRPR:{e}"
             else:
                 return redirect(url_for("auth.login"))
 
@@ -48,9 +58,6 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    if g.user:
-        return redirect("/")
-
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -70,7 +77,7 @@ def login():
             session.clear()
             session['admin_id'] = admin['id']
             
-            return redirect("/")
+            return redirect(url_for("index"))
         
         flash(error, 'error')
 
@@ -78,13 +85,13 @@ def login():
 
 @bp.before_app_request
 def load_logged_in_user():
-    user_id = session.get('admin_id')
+    admin_id = session.get('admin_id')
 
-    if user_id is None:
+    if admin_id is None:
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT * FROM admin WHERE id = ?', (admin_id,)
         ).fetchone()
 
 @bp.route('/logout')

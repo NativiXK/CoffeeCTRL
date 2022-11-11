@@ -1,6 +1,6 @@
 import sqlite3
 import click
-from flask import current_app, g
+from flask import current_app, g, session
 
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
@@ -69,7 +69,7 @@ def update_payment(payment):
 
 def get_user_payments_by_name(name : str = "") -> dict:
     db = get_db()
-    query = "SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person" + (f" WHERE person.name LIKE '%{name}%'" if name != "" else "")
+    query = f"SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person WHERE admin_id == {session.get('admin_id')}" + (f" AND person.name LIKE '%{name}%'" if name != "" else "")
     print(query)
     people = db.execute(query).fetchall()
 
@@ -115,7 +115,7 @@ def get_user_payments_by_id(user_id : int = None) -> dict:
 def get_income(month : int = 13): # 13 means yearly filter
 
     db = get_db()
-    query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment" + (f" WHERE strftime('%m', payment.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
+    query = f"SELECT SUM(payment.value - payment.discount) as income FROM payment WHERE person_id IN (SELECT id FROM person WHERE admin_id == {session.get('admin_id')})" + (f" AND strftime('%m', payment.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
     print(query)
     income = db.execute(query).fetchone()["income"]
 
@@ -124,7 +124,7 @@ def get_income(month : int = 13): # 13 means yearly filter
 def get_cash_spent(month : int = 13): # 13 means yearly filter
     
     db = get_db()
-    query = f"SELECT SUM(purchase.value) as spent FROM purchase" + (f" WHERE strftime('%m', purchase.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
+    query = f"SELECT SUM(purchase.value) as spent FROM purchase WHERE person_id IN (SELECT id FROM person WHERE admin_id == {session.get('admin_id')})" + (f" AND strftime('%m', purchase.date) == '{('0' + str(month) if month < 10 else str(month))}'" if month >= 1 and month <= 12 else "")
     print(query)
     spent = db.execute(query).fetchone()["spent"]
 
@@ -141,7 +141,7 @@ def get_person_by_id(user_id : int):
 def get_people():
 
     db = get_db()
-    query = f"SELECT id, name FROM person"
+    query = f"SELECT id, name FROM person WHERE admin_id == {session.get('admin_id')}"
     print(query)
     people = db.execute(query).fetchall()
 
@@ -149,7 +149,7 @@ def get_people():
 
 def add_new_user(user_data : dict):
     db = get_db()
-    query = f"INSERT INTO person (name, email, area) VALUES (\"{user_data['name']}\", \"{user_data['email']}\", \"{user_data['area']}\")"
+    query = f"INSERT INTO person (name, email, area, admin_id) VALUES (\"{user_data['name']}\", \"{user_data['email']}\", \"{user_data['area']}\", {session.get('admin_id')})"
     print(query)
     db.execute(query)
     db.commit()

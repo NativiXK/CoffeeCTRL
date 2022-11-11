@@ -185,7 +185,7 @@ header
     height: 5%;
     max-height: 150px;
     background-color: lavender;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid lightgray;
 }
 
 element {
