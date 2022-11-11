@@ -188,6 +188,10 @@ header
     border-bottom: 2px solid lightgray;
 }
 
+main {
+    margin-bottom: 5%;
+}
+
 element {
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */

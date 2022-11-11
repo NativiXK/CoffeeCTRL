@@ -25,12 +25,20 @@
                     <input class="form-control" type="text" placeholder="Admin username" value="{{group.username}}" readonly>
                 </div>
 
+                <!-- Admin email -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                    </div>
+                    <input class="form-control" type="email" placeholder="Input a valid email" name="email" value="{{group.email}}" required>
+                </div>
+
                 <!-- Monthly price -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Monthly R$</span>
                     </div>
-                    <input class="form-control" type="number" name="monthly-price" value="0" required>
+                    <input class="form-control" type="number" name="monthly-price" value="{{group.monthly_price}}" required>
                 </div>
 
                 <!-- Group contributors -->
@@ -42,7 +50,7 @@
                 </div>
 
                 <div class="input-group mb-3 d-flex justify-content-around">
-                    <input class="btn btn-primary w-25" type="submit" value="Save">
+                    <input class="btn btn-primary w-25" type="submit" onclick="return confirmSubmit()" value="Save">
                 </div>
             </form>
         </div>

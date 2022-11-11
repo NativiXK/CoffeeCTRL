@@ -81,6 +81,17 @@ def API_add_user_purchase():
 
     return redirect("/")
 
+@bp.route("/save_group_info", methods=["POST"])
+def API_save_group_info():
+    group = dict(request.form)
+
+    if db.save_group_info(group):
+        flash("Group info saved!", "message")
+    else:
+        flash("It wasn't possible to save group info", "error")
+
+    return redirect("/")
+
 @bp.route("/remove_user_by_id", methods=["POST"])
 @auth.login_required
 def API_remove_user_by_id():

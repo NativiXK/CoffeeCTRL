@@ -206,6 +206,17 @@ def get_group_info():
 
     return group
 
+def save_group_info(group : dict):
+    db = get_db()
+    query = f"UPDATE admin SET group_name = '{group['group-name']}', email = '{group['email']}', monthly_price = {group['monthly-price']} WHERE id == {session.get('admin_id')}"
+    print(query)
+    try:
+        db.execute(query)
+        db.commit()
+        return 1
+    except:
+        return 0
+
 @click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables."""
