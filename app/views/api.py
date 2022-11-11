@@ -1,4 +1,4 @@
-from flask import jsonify, render_template, request, Blueprint, flash, redirect
+from flask import jsonify, render_template, request, Blueprint, flash, redirect, session
 from app import db
 from app.views import modals, auth
 import calendar
@@ -107,7 +107,7 @@ def API_cash_report():
 
     cursor = db.get_db()
     
-    query = f"SELECT person.name as name, {table}.date as date, {table}.value as value" + (f", {table}.discount as discount" if table == 'payment' else "") + f" FROM person, {table} WHERE person.id == {table}.person_id"
+    query = f"SELECT person.name as name, {table}.date as date, {table}.value as value" + (f", {table}.discount as discount" if table == 'payment' else "") + f" FROM person, {table} WHERE person.id == {table}.person_id AND person.id IN (SELECT id FROM person WHERE admin_id == {session.get('admin_id')})"
 
     if (month_num != 13):
         query += f" AND strftime('%m', {table}.date) == '{('0' + str(month_num) if month_num < 10 else str(month_num))}'"

@@ -30,4 +30,5 @@ def edit_payments():
 
     income = db.get_income()
     spent = db.get_cash_spent()
-    return render_template("manager/edit.html", users = db.get_user_payments_by_name(), coffee_price = 15.0,income = income, spent = spent)
+    coffee_price = db.get_coffee_price()
+    return render_template("manager/edit.html", users = db.get_user_payments_by_name(), coffee_price = coffee_price, income = income, spent = spent)

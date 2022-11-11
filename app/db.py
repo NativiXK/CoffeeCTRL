@@ -191,7 +191,20 @@ def add_purchase(purchase : dict):
     return 1
 
 def get_coffee_price(): #to do
-    pass
+    db = get_db()
+    query = f"SELECT monthly_price as price FROM admin WHERE id == {session.get('admin_id')}"
+    print(query)
+    price = db.execute(query).fetchone()["price"]
+
+    return price if price else 0
+
+def get_group_info():
+    db = get_db()
+    query = f"SELECT * FROM admin WHERE id == {session.get('admin_id')}"
+    print(query)
+    group = db.execute(query).fetchone()
+
+    return group
 
 @click.command('init-db')
 def init_db_command():

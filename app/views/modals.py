@@ -4,8 +4,9 @@ from app import db
 def render_purchase() -> str:
     return render_template("modals/purchase.html", people = db.get_people())
 
-def render_coffee(parameters : dict) -> str: #to do
-    pass
+def render_coffee() -> str:
+    group = db.get_group_info()
+    return render_template("modals/coffee.html", group = group)
 
 def render_user_payments(parameters : dict) -> str:
 

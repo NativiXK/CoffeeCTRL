@@ -296,6 +296,19 @@ async function RemoveUserById(user_id)
     }
 }
 
+async function EditGroupInfo()
+{
+    let modal = await API_GetModal("coffee");
+
+    $(modal["html"]).appendTo("body");
+    $("#CoffeeModal").modal("show");
+
+    $('#CoffeeModal').on('hidden.bs.modal', function (e) {
+        $("#CoffeeModal").remove();
+      })
+
+}
+
 async function IncomeReportByMonth()
 {
     let month_num = parseInt($("#cash-income-filter").val());
@@ -395,6 +408,7 @@ document.addEventListener('DOMContentLoaded', (event) =>
     $("#btn-purchase").click(OpenPurchaseModal);
     $("#pay-value").change(update_payment_total);
     $("#pay-discount").change(update_payment_total);
+    $("#edit-coffee").click(EditGroupInfo);
     $("#cash-income-filter").change(IncomeReportByMonth);
     $("#cash-spent-filter").change(SpentReportByMonth);
     // Add event listeners
