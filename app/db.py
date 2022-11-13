@@ -74,16 +74,42 @@ def get_user_payments_by_name(name : str = "") -> dict:
     people = db.execute(query).fetchall()
 
     for person in people:
-        query = f"SELECT strftime('%m', payment.date) as month, payment.value, payment.discount FROM person, payment WHERE person.id == payment.person_id and person.id == {person['id']} ORDER BY Month"
+        query = f"SELECT strftime('%m', payment.date) as month, payment.value, payment.discount FROM payment WHERE person_id == {person['id']} ORDER BY Month"
         pays = db.execute(query).fetchall()
-        person["months"] = [
-            {"month" : i, 
-            "value" : 0,
-            "discount" : 0} for i in range(1, 13)]
+
+        # print(pays)
+        credit = sum([pay['value'] for pay in pays])
+        coffee_price = get_coffee_price()
+
+        # person["months"] = [
+        #     {"month" : i, 
+        #     "value" : 0,
+        #     "discount" : 0} for i in range(1, 13)]
+
+        # Apply monthly payments 
+        person["months"] = []
+        for i in range(1, 13):
+
+            month = {
+                "month"     : i, 
+                "value"     : 0,
+                "discount"  : 0}
+
+            if credit >= coffee_price:
+                credit -= coffee_price
+                month["value"] = coffee_price
+            elif credit < coffee_price and credit:
+                month["value"] = credit
+                credit -= credit
+
+            person['months'].append(month)
         
+        # for pay in pays:
+        #     person["months"][int(pay["month"]) - 1] = pay
+
         for pay in pays:
-            person["months"][int(pay["month"]) - 1] = pay
-            
+            person["months"][int(pay["month"]) - 1]['discount'] = pay["discount"]
+
     return people
 
 def get_groups_by_name(name):

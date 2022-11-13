@@ -39,13 +39,13 @@ def API_add_new_user():
 def API_add_user_payment():
 
     payment = request.get_json();
-    print(payment)
+    # print(payment)
 
     payment["date"] = '-'.join(payment["date"].split('/')[::-1])
 
-    if db.is_month_paid(payment["date"], payment["user_id"]):
-        flash("PAYMENT NOT REGISTERED! There is already a payment for the given month", "error")
-        return "0", 400
+    # if db.is_month_paid(payment["date"], payment["user_id"]):
+    #     flash("PAYMENT NOT REGISTERED! There is already a payment for the given month", "error")
+    #     return "0", 400
 
     db.add_payment(payment)
     flash(f"R${ (float(payment['value']) - float(payment['discount'])) } PAYMENT REGISTERED! ", "message")

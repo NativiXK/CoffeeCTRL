@@ -141,12 +141,14 @@
                 <th class="col-id" hidden> {{ user.id }} </td>
                 <td class="col-name">{{ user.name }}</td>
                 {% for month in user.months %}
-                    {% if (month.value - month.discount) == 0 %}
+                    {% if ((month.value - month.discount) == 0) and (month.value > 0)%}
                         <td style="background-color: lightgrey;"> - </td>
                     {% elif month.value %}
-                        <td style="background-color: lightgreen;">R${{ month.value - month.discount }}</td>    
+                        <td style="background-color: rgb(100, 255, 100);">{{ 'R$%.2f' | format(month.value - month.discount) }}</td>    
+                    {% elif not month.value and month.discount %}
+                        <td style="background-color: rgb(255, 255, 100);">{{ 'R$%.2f' | format(month.value - month.discount) }}</td>
                     {% else %}
-                        <td style="background-color: lightcoral;">R${{ month.value - month.discount }}</td>
+                        <td style="background-color: rgb(255, 100, 100);">R$0</td>
                     {% endif %}
                 {% endfor %}
             </tr>
