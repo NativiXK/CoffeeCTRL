@@ -46,20 +46,20 @@ INSERT INTO admin (username, password, group_name) VALUES
     ("admin", "pbkdf2:sha256:260000$hF5MCPGWuihDgxJV$ec34b1b2f7b18bd07838c9c115b1fd936da8574f00fff4467b64635973c299b9", "PSA");
 
 INSERT INTO person (name, email, admin_id) VALUES
-    ("Alan Vitor Gomes", "alanvg@weg.net", 1),
-    ("Alexandre Endler", "aendler@weg.net", 1),
-    ("Anderson Montiel Rodrigues", "montiel@weg.net", 1),
-    ("Anderson Luis Hanemann Junior", "andersonlj@weg.net", 1),
-    ("Bruno Eduardo Esteves de Lima", "brunoeduardo@weg.net", 1),
-    ("Cristiano Deoracki", "deoracki@weg.net", 1),
-    ("Daniel Mayer Faria", "faria@weg.net", 1),
-    ("Dener Matei", "denerm@weg.net", 1),
-    ("Eduardo Leopoldo da Silva", "esilva@weg.net", 1),
-    ("Elton Ubiratan Dutra", "eltond@weg.net", 1),
-    ("Felipe Silva de Paula", "felipepaula@weg.net", 1),
-    ("Gabriel Filipe Scharf Krieger", "gkrieger@weg.net", 1),
-    ("Gustavo Tadin Bruno", "gustavotb@weg.net", 1),
-    ("Henrique Wolf", "henriquewolf@weg.local", 1);
+    ("Alan Vitor Gomes", "alanvg@ti.net", 1),
+    ("Alexandre Endler", "aendler@ti.net", 1),
+    ("Anderson Montiel Rodrigues", "montiel@ti.net", 1),
+    ("Anderson Luis Hanemann Junior", "andersonlj@ti.net", 1),
+    ("Bruno Eduardo Esteves de Lima", "brunoeduardo@ti.net", 1),
+    ("Cristiano Deoracki", "deoracki@ti.net", 1),
+    ("Daniel Mayer Faria", "faria@ti.net", 1),
+    ("Dener Matei", "denerm@ti.net", 1),
+    ("Eduardo Leopoldo da Silva", "esilva@ti.net", 1),
+    ("Elton Ubiratan Dutra", "eltond@ti.net", 1),
+    ("Felipe Silva de Paula", "felipepaula@ti.net", 1),
+    ("Gabriel Filipe Scharf Krieger", "gkrieger@ti.net", 1),
+    ("Gustavo Tadin Bruno", "gustavotb@ti.net", 1),
+    ("Henrique Wolf", "henriquewolf@ti.local", 1);
 
 INSERT INTO payment (date, value, discount, person_id) VALUES
     ("2022-09-27", 5.0, 5.0, 1),
