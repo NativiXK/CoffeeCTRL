@@ -32,7 +32,7 @@
 {% block body %}
     <form action="/" method="post" class="mx-auto my-3 w-50">
         <div class="input-group mb-3">
-            <h3>Looking for a coffe group? try looking for its name</h3>
+            <h3>Looking for a coffee group? try looking for its name</h3>
         </div>
         <div class="input-group mb-3">
             <input class="form-control" type="text" name="group-name" id="group-name" placeholder="Search for a group name">
@@ -43,7 +43,7 @@
 {% if groups %}
     <div class="card d-flex flex-row align-items-center justify-content-center border-light w-75 mx-auto">
         {% for group in groups %}
-        <div class="card border-secondary m-3" style="width: 200px;">
+        <div class="card border-secondary m-3" style="width: 20%; height: 10rem;">
             <div class="card-body">
                 <h5 class="card-title text-center">{{group.group_name}}</h5>
                 <div class="d-flex border-dark">

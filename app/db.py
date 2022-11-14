@@ -72,6 +72,7 @@ def get_user_payments_by_name(name : str = "") -> dict:
     query = f"SELECT person.id as id, person.name as name, person.email as email, person.area as area FROM person WHERE admin_id == {session.get('admin_id')}" + (f" AND person.name LIKE '%{name}%'" if name != "" else "")
     print(query)
     people = db.execute(query).fetchall()
+    coffee_price = get_coffee_price()
 
     for person in people:
         query = f"SELECT strftime('%m', payment.date) as month, payment.value, payment.discount FROM payment WHERE person_id == {person['id']} ORDER BY Month"
@@ -79,7 +80,7 @@ def get_user_payments_by_name(name : str = "") -> dict:
 
         # print(pays)
         credit = sum([pay['value'] for pay in pays])
-        coffee_price = get_coffee_price()
+        print(credit)
 
         # person["months"] = [
         #     {"month" : i, 

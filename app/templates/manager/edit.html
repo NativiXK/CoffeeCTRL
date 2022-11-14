@@ -32,7 +32,7 @@
         <form class="input-group" action="/edit" method="post">
             <input autofocus class="form-control w-75" type="text" name="name" placeholder="Nome" aria-label="name" aria-describedby="button-addon2">
             <div class="input-group-append">
-                <input class="btn btn-primary" id="button-addon2" type="submit" title="Filtrar" value="Filtrar">
+                <input class="btn btn-primary" id="button-addon2" type="submit" title="Filter" value="Filter">
             </div>
         </form>
     </div>
@@ -56,7 +56,8 @@
             <h3>Income</h3>
             <input type="text" value="{{'R$%.2f' | format(income)}}" readonly>
             <select name="cash-income-filter" id="cash-income-filter">
-                <option value="13" selected>Yearly</option>
+                <option selected>Select</option>
+                <option value="13">Yearly</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option>
@@ -76,7 +77,8 @@
             <h3>Spent</h3>
             <input type="text" value="{{'R$%.2f' | format(spent)}}" readonly>
             <select name="cash-spent-filter" id="cash-spent-filter">
-                <option value="13" selected>Yearly</option>
+                <option selected>Select</option>
+                <option value="13" >Yearly</option>
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option>
@@ -95,21 +97,6 @@
         <div class="card cash" id="cash-total">
             <h3>Total</h3>
             <input type="text" value="{{'R$%.2f' | format(income - spent)}}" readonly>
-            <select name="cash-total-filter" id="cash-total-filter">
-                <option value="13" selected>Yearly</option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
         </div>
     </div>
 {% endif %}
